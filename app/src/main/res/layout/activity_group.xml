@@ -16,7 +16,7 @@
         android:layout_marginRight="151dp"
         android:layout_marginBottom="356dp"
         android:textSize="34sp"
-        android:text="create new group"
+        android:text="create new group!!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
