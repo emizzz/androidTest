@@ -22,7 +22,7 @@
 
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/group_add"
+        android:id="@+id/addgroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/groups_list"
