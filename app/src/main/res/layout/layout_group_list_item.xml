@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin_padding_size_small"
-                android:src="@android:drawable/ic_dialog_info" />
+                android:src="@android:drawable/ic_menu_delete" />
 
             <ImageView
                 android:layout_toLeftOf="@id/group_item_icon1"
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin_padding_size_small"
-                android:src="@android:drawable/ic_delete" />
+                android:src="@android:drawable/ic_menu_my_calendar" />
 
 
         </RelativeLayout>
