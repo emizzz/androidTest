@@ -74,7 +74,7 @@
             <NumberPicker
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:id="@+id/numberPicker"
+                android:id="@+id/numberpicker"
                 android:layout_weight="1"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
                 android:layout_marginEnd="@dimen/margin_padding_size_medium"

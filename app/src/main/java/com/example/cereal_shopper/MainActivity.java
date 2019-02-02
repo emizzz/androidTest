@@ -1,12 +1,15 @@
 package com.example.cereal_shopper;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView groupsListView;
     private RecyclerView.Adapter groupsListAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    private static final int REQUEST_CODE_LISTA = 10;
 
 
     //private String[] groupsNames = new String[] {"Famiglia", "Conquilini"};
@@ -110,7 +115,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),group.class);
-                startActivity(intent);
+
+                startActivityForResult(intent,REQUEST_CODE_LISTA);
+                //startActivity(intent);
             }
         });
 
@@ -118,5 +125,39 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(resultCode!= Activity.RESULT_OK){
+            return;
+        }
+        if (requestCode==REQUEST_CODE_LISTA) {
+            Bundle extras= data.getExtras();
+            if (extras != null) {
+                String name = extras.getString("NAME");
+                String category = extras.getString("CATEGORY");
+                int quantity = extras.getInt("QUANTITY");
+                String note = extras.getString("NOTE");
+                Toast.makeText(getApplicationContext(), name + category +  quantity + note, Toast.LENGTH_SHORT).show();
+                JSONObject item = new JSONObject();
+                try{
+                    if (requestCode==REQUEST_CODE_LISTA) {
+                        item.put("type", "product_list");
+                        item.put("product_type", "list");      // "list" or "pantry"
+                    }
+                    item.put("title", name);
+                    item.put("description", note);
 
+                    groupsList.put(item);
+
+                } catch (JSONException e) {
+                    //log something
+                }
+                groupsListAdapter = new List(this, groupsList);
+
+                groupsListView.setAdapter(groupsListAdapter);
+                // and get whatever data you are adding
+            }
+        }
+
+    }
 }
