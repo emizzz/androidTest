@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/user_list_item"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    >
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/toolbar_margin_size">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_padding_size_large">
+
+            <ImageView
+                android:id="@+id/user_item_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:padding="@dimen/margin_padding_size_small"
+                android:src="@android:drawable/ic_dialog_info"
+                android:tint="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/user_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="0dp"
+                android:layout_toRightOf="@id/user_item_image"
+                android:paddingLeft="@dimen/margin_padding_size_small"
+                android:text="Giulia Giannetta"
+                android:textSize="@dimen/text_size_large" />
+
+            <TextView
+                android:id="@+id/user_item_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user_item_image"
+                android:layout_toRightOf="@id/user_item_image"
+                android:paddingLeft="@dimen/margin_padding_size_medium"
+                android:text="giuli@gianne.it"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:id="@+id/user_item_counter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="@dimen/margin_padding_size_medium"
+                android:text="16 €"
+                android:textSize="@dimen/text_size_large" />
+
+            <Button
+                android:id="@+id/user_item_counter_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/user_item_counter"
+                android:text="Azzera" />
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

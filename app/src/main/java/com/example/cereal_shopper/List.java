@@ -1,58 +1,213 @@
 package com.example.cereal_shopper;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 
-public class List extends RecyclerView.Adapter<List.MyViewHolder> {
-    private String[] data;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView  name;
+public class List extends RecyclerView.Adapter {
+    private JSONArray data;
+    private Context mContext;
+    private int size;
+
+    // GROUP LIST VIEWHOLDER
+    public static class GroupListViewHolder extends RecyclerView.ViewHolder {
+        public TextView title;
         public View mView;
-        public MyViewHolder(View v) {
+        public GroupListViewHolder(View v) {
             super(v);
             mView = v;
-            name = (TextView) mView.findViewById(R.id.item_name);
+            title = (TextView) mView.findViewById(R.id.group_item_name);
+
+            mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(),group.class);
+                    v.getContext().startActivity(intent);
+                }
+            });
+        }
+    }
+    // USER LIST VIEWHOLDER
+    public static class UserListViewHolder extends RecyclerView.ViewHolder {
+        public TextView title;
+        public TextView description;
+        public ImageView photo;
+        public TextView counter;
+        public Button counter_btn;
+
+        public View mView;
+        public UserListViewHolder(View v) {
+            super(v);
+            mView = v;
+            title = mView.findViewById(R.id.user_item_name);
+            description = mView.findViewById(R.id.user_item_email);
+            photo = mView.findViewById(R.id.user_item_image);
+            counter = mView.findViewById(R.id.user_item_counter);
+            counter_btn = mView.findViewById(R.id.user_item_counter_btn);
+
+            counter_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //here goes the conter_btn logic
+                }
+            });
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of data)
-    public List(String[] _data) {
-        data = _data;
+    // PRODUCT LIST VIEWHOLDER
+    public static class ProductListViewHolder extends RecyclerView.ViewHolder {
+        public TextView title;
+        public TextView description;
+        public ImageView icon;
+        public View mView;
+
+        public ProductListViewHolder(View v) {
+            super(v);
+            mView = v;
+            title =  mView.findViewById(R.id.product_item_name);
+            description = mView.findViewById(R.id.product_item_description);
+            icon = mView.findViewById(R.id.product_item_image);
+
+        }
+    }
+
+
+    // Adapter Constructor
+    public List(Context context, JSONArray _data) {
+
+        this.data = _data;
+        this.mContext = context;
+        this.size = _data.length();
+
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public List.MyViewHolder onCreateViewHolder(ViewGroup parent,
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                      int viewType) {
-        // create a new view
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item, parent, false);
+        View view;
 
-        MyViewHolder vh = new MyViewHolder(v);
-        return vh;
+        switch (viewType) {
+            case 0:     //0 == group_list
+                view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.layout_group_list_item, parent, false);
+                return new GroupListViewHolder(view);
+
+            case 1:    //1 == user_list
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.layout_user_list_item, parent, false);
+                return new UserListViewHolder(view);
+
+            case 2:    //2 == product_list
+                view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.layout_product_list_item, parent, false);
+                return new ProductListViewHolder(view);
+
+            default:
+                return null;
+
+        }
+
+    }
+
+    @Override
+    public int getItemViewType(int i) {
+        String type = "";
+
+        try {
+            type = data.getJSONObject(i).getString("type");
+
+        } catch (JSONException e) {
+            return -1;
+        }
+
+        switch (type) {
+            case "group_list":
+                return 0;
+            case "user_list":
+                return 1;
+            case "product_list":
+                return 2;
+            default:
+                return -1;
+        }
+
+
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int i) {
-        // - get element from your data at this position
-        // - replace the contents of the view with that element
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int i) {
 
-        //holder.mView.setText(data[position]);
-        holder.name.setText(data[i]);
+        String type = "";
+        try {
+            type = data.getJSONObject(i).getString("type");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //Log.e("---", type);
+
+        switch (type) {
+            case "group_list":
+                try {
+                    ((GroupListViewHolder) holder).title.setText(data.getJSONObject(i).getString("title"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case "user_list":
+                try {
+                    String price = String.format(this.mContext.getResources().getString(R.string.prices),
+                            data.getJSONObject(i).getString("counter"));
+
+                    ((UserListViewHolder) holder).title.setText(data.getJSONObject(i).getString("title"));
+                    ((UserListViewHolder) holder).description.setText(data.getJSONObject(i).getString("description"));
+                    //((UserListViewHolder) holder).photo.setImageDrawable();
+                    ((UserListViewHolder) holder).counter.setText(price);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case "product_list":
+                try {
+
+                    ((ProductListViewHolder) holder).title.setText(data.getJSONObject(i).getString("title"));
+                    ((ProductListViewHolder) holder).description.setText(data.getJSONObject(i).getString("description"));
+
+                    if(data.getJSONObject(i).getString("product_type").equals("list")){
+                        //((ProductListViewHolder) holder).icon.setImageDrawable();
+                    }
+                    if(data.getJSONObject(i).getString("product_type").equals("pantry")){
+                        //((ProductListViewHolder) holder).icon.setImageDrawable();
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+
     }
 
     // Return the size of your data (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return data.length;
+        return this.size;
     }
 }
