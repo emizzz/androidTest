@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         //populate list data
 
 
-        /*
+
         // ----------------- GROUP LIST -----------------
         JSONObject item1 = new JSONObject();
         JSONObject item2 = new JSONObject();
@@ -55,41 +55,44 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    */
 
 
-        /*
+
+
         //-----------------  USER LIST -----------------
-        JSONObject item1 = new JSONObject();
+        JSONObject item11 = new JSONObject();
         try{
-            item1.put("type", "user_list");
-            item1.put("title", "Gianni");
-            item1.put("description", "gianni@gianni.it");
-            item1.put("photo_path", "photo_path");
-            item1.put("counter", "15");
+            item11.put("type", "user_list");
+            item11.put("title", "Gianni");
+            item11.put("description", "gianni@gianni.it");
+            item11.put("photo_path", "photo_path");
+            item11.put("counter", "15");
 
-            groupsList.put(item1);
-
-        } catch (JSONException e) {
-            //log something
-        }*/
-
-
-        //----------------- PRODUCT LIST -----------------
-        JSONObject item1 = new JSONObject();
-        try{
-            item1.put("type", "product_list");
-            item1.put("title", "Latte");
-            item1.put("description", "parzialmente scremato");
-            item1.put("product_type", "list");      // "list" or "pantry"
-
-            groupsList.put(item1);
+            groupsList.put(item11);
 
         } catch (JSONException e) {
             //log something
         }
 
 
+        //----------------- PRODUCT LIST -----------------
+        JSONObject item111 = new JSONObject();
+        JSONObject item222 = new JSONObject();
+        try{
+            item111.put("type", "product_list");
+            item111.put("title", "Latte");
+            item111.put("description", "parzialmente scremato");
+            item111.put("product_type", "list");      // "list" or "pantry"
+            item222.put("type", "product_list");
+            item222.put("title", "Latte");
+            item222.put("description", "parzialmente scremato");
+            item222.put("product_type", "list");      // "list" or "pantry"
+            groupsList.put(item111);
+            groupsList.put(item222);
+
+        } catch (JSONException e) {
+            //log something
+        }
 
 
         /*create recycler view*/

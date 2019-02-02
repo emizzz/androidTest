@@ -28,22 +28,21 @@
                 android:id="@+id/product_item_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_marginLeft="0dp"
-                android:layout_toRightOf="@id/product_item_image"
-                android:paddingLeft="@dimen/margin_padding_size_small"
+                android:paddingLeft="@dimen/margin_padding_size_medium"
                 android:text="Latte"
-                android:textSize="@dimen/text_size_large" />
+                android:textSize="@dimen/text_size_large"
+                android:layout_toRightOf="@id/product_item_image"/>
 
             <TextView
                 android:id="@+id/product_item_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/product_item_image"
-                android:layout_toRightOf="@id/product_item_image"
                 android:paddingLeft="@dimen/margin_padding_size_medium"
                 android:text="parzialmente scremato"
-                android:textSize="@dimen/text_size_small" />
+                android:textSize="@dimen/text_size_small"
+                android:layout_below="@+id/product_item_name"
+                android:layout_toRightOf="@id/product_item_image"/>
 
             <ImageView
                 android:id="@+id/product_item_icon1"
@@ -52,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin_padding_size_small"
-                android:src="@android:drawable/ic_dialog_info" />
+                android:src="@android:drawable/ic_menu_delete" />
 
 
         </RelativeLayout>

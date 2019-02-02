@@ -39,7 +39,7 @@
                 android:id="@+id/user_item_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/user_item_image"
+                android:layout_below="@+id/user_item_name"
                 android:layout_toRightOf="@id/user_item_image"
                 android:paddingLeft="@dimen/margin_padding_size_medium"
                 android:text="giuli@gianne.it"
@@ -52,7 +52,8 @@
                 android:layout_alignParentRight="true"
                 android:paddingLeft="@dimen/margin_padding_size_medium"
                 android:text="16 €"
-                android:textSize="@dimen/text_size_large" />
+                android:textSize="@dimen/text_size_large"
+                android:layout_centerVertical="true"/>
 
             <Button
                 android:id="@+id/user_item_counter_btn"
