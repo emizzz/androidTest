@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/ScrollView01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical">
+
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TextViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Aggiungi a Dispensa"
+                android:textSize="34sp"
+                android:layout_weight="2"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp">
+            </TextView>
+
+            <EditText
+                android:id="@+id/edittextname"
+                android:layout_height="wrap_content"
+                android:hint="Prodotto"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:textSize="25sp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+
+                android:layout_weight="2">
+            </EditText>
+
+            <EditText
+                android:id="@+id/edittextcategory"
+                android:layout_height="wrap_content"
+                android:hint="Categoria"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:textSize="25sp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+
+                android:layout_weight="2">
+            </EditText>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quantità"
+                    android:layout_gravity="center"
+                    android:layout_weight="3"
+                    android:textSize="25sp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    />
+                <NumberPicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/numberpicker"
+                    android:layout_weight="1"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Peso g"
+                    android:layout_gravity="center"
+                    android:layout_weight="3"
+                    android:textSize="25sp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    />
+                <NumberPicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/pickerweight"
+                    android:layout_weight="1"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/price"
+                android:layout_height="wrap_content"
+                android:hint="Prezzo"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:textSize="25sp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+
+                android:layout_weight="2">
+            </EditText>
+            <EditText
+                android:id="@+id/expiration"
+                android:layout_height="wrap_content"
+                android:hint="Scadenza"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:textSize="25sp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+
+                android:layout_weight="2">
+            </EditText>
+            <EditText
+                android:id="@+id/editnotes"
+                android:layout_height="wrap_content"
+                android:hint="Note"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:textSize="25sp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+
+                android:layout_weight="2">
+            </EditText>
+
+
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/checkbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:src="@android:drawable/checkbox_on_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/barcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:src="@android:drawable/stat_sys_download"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/checkbutton"
+        app:layout_constraintEnd_toEndOf="parent" />
+</android.support.constraint.ConstraintLayout>

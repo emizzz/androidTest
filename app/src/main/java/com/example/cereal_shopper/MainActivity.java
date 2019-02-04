@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
 
     private static final int REQUEST_CODE_LISTA = 10;
+    private static final int REQUEST_CODE_DISPENSA = 20;
 
 
     //private String[] groupsNames = new String[] {"Famiglia", "Conquilini"};
@@ -117,10 +118,22 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),group.class);
-
+                //add to dispensa
+                /*
+                Intent intent = new Intent(getApplicationContext(),addItem.class);
+                startActivityForResult(intent,REQUEST_CODE_DISPENSA);
+                */
+                //add to lista
+                /*
+                 Intent intent = new Intent(getApplicationContext(),group.class);
                 startActivityForResult(intent,REQUEST_CODE_LISTA);
-                //startActivity(intent);
+                 */
+
+                //go to listadispensa
+                Intent intent = new Intent(getApplicationContext(),liste.class);
+
+                startActivity(intent);
+
             }
         });
 
@@ -143,10 +156,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), name + category +  quantity + note, Toast.LENGTH_SHORT).show();
                 JSONObject item = new JSONObject();
                 try{
-                    if (requestCode==REQUEST_CODE_LISTA) {
-                        item.put("type", "product_list");
-                        item.put("product_type", "list");      // "list" or "pantry"
-                    }
+                    item.put("type", "product_list");
+                    item.put("product_type", "list");      // "list" or "pantry"
                     item.put("title", name);
                     item.put("description", note);
 
@@ -155,6 +166,36 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     //log something
                 }
+
+                groupsListAdapter = new List(this, groupsList);
+
+                groupsListView.setAdapter(groupsListAdapter);
+                // and get whatever data you are adding
+            }
+        }
+        if (requestCode==REQUEST_CODE_DISPENSA) {
+            Bundle extras= data.getExtras();
+            if (extras != null) {
+                String name = extras.getString("NAME");
+                String category = extras.getString("CATEGORY");
+                int quantity = extras.getInt("QUANTITY");
+                int weight = extras.getInt("WEIGHT");
+                String price = extras.getString("PRICE");
+                String expiration = extras.getString("EXPIRATION");
+                String note = extras.getString("NOTE");
+                JSONObject item = new JSONObject();
+                try{
+                    item.put("type", "product_list");
+                    item.put("product_type", "pantry");      // "list" or "pantry"
+                    item.put("title", name);
+                    item.put("description", note);
+
+                    groupsList.put(item);
+
+                } catch (JSONException e) {
+                    //log something
+                }
+
                 groupsListAdapter = new List(this, groupsList);
 
                 groupsListView.setAdapter(groupsListAdapter);
