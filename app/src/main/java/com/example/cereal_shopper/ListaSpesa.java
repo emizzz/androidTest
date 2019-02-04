@@ -1,7 +1,9 @@
 package com.example.cereal_shopper;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +20,7 @@ public class ListaSpesa extends Fragment{
     private RecyclerView groupsListView;
     private RecyclerView.Adapter groupsListAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
+    private FloatingActionButton fab;
     private JSONArray groupsList = new JSONArray();
 
 
@@ -28,18 +30,13 @@ public class ListaSpesa extends Fragment{
 
 
         JSONObject item111 = new JSONObject();
-        JSONObject item222 = new JSONObject();
         try{
             item111.put("type", "product_list");
             item111.put("title", "Latte");
             item111.put("description", "parzialmente scremato");
             item111.put("product_type", "list");      // "list" or "pantry"
-            item222.put("type", "product_list");
-            item222.put("title", "Latte");
-            item222.put("description", "parzialmente scremato");
-            item222.put("product_type", "list");      // "list" or "pantry"
+
             groupsList.put(item111);
-            groupsList.put(item222);
 
         } catch (JSONException e) {
             //log something
@@ -55,6 +52,15 @@ public class ListaSpesa extends Fragment{
 
         groupsListView.setAdapter(groupsListAdapter);
 
+        fab = (FloatingActionButton) v.findViewById(R.id.addtospesa);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),addToSpesa.class);
+                getActivity().startActivity(intent);
+
+            }
+        });
 
         return v;
     }

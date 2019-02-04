@@ -1,5 +1,6 @@
 package com.example.cereal_shopper;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -8,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,21 +22,34 @@ public class List extends RecyclerView.Adapter {
     private JSONArray data;
     private Context mContext;
     private int size;
+    private static final int REQUEST_CODE_GROUP = 30;
 
     // GROUP LIST VIEWHOLDER
     public static class GroupListViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
+        public ImageButton userbtn;
         public View mView;
         public GroupListViewHolder(View v) {
             super(v);
             mView = v;
             title = (TextView) mView.findViewById(R.id.group_item_name);
 
+
             mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(),group.class);
+                    Intent intent = new Intent(v.getContext(),liste.class);
                     v.getContext().startActivity(intent);
+                }
+            });
+            userbtn = (ImageButton) mView.findViewById(R.id.group_item_icon2);
+            userbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(),group.class);
+                    String name=(String) ((TextView) mView.findViewById(R.id.group_item_name)).getText();
+                    intent.putExtra("NAME", name);
+                    ((Activity) v.getContext()).startActivityForResult(intent,REQUEST_CODE_GROUP);
                 }
             });
         }
@@ -71,6 +87,7 @@ public class List extends RecyclerView.Adapter {
         public TextView description;
         public ImageView icon;
         public View mView;
+        public ImageButton delbtn;
 
         public ProductListViewHolder(View v) {
             super(v);
@@ -78,6 +95,16 @@ public class List extends RecyclerView.Adapter {
             title =  mView.findViewById(R.id.product_item_name);
             description = mView.findViewById(R.id.product_item_description);
             icon = mView.findViewById(R.id.product_item_image);
+
+           delbtn = (ImageButton) mView.findViewById(R.id.product_item_icon1);
+
+            delbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(),addItem.class);
+                    v.getContext().startActivity(intent);
+                }
+            });
 
         }
     }

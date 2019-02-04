@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".addItem"></activity>
+        <activity android:name=".addToSpesa"></activity>
+        <activity android:name=".addItem" />
         <activity android:name=".liste" />
         <activity android:name=".group" />
         <activity android:name=".MainActivity">

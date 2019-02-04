@@ -44,7 +44,7 @@
                 android:layout_below="@+id/product_item_name"
                 android:layout_toRightOf="@id/product_item_image"/>
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/product_item_icon1"
                 android:layout_alignParentRight="true"
                 android:tint="@color/colorPrimary"
@@ -52,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin_padding_size_small"
                 android:src="@android:drawable/ic_menu_delete" />
+
 
 
         </RelativeLayout>

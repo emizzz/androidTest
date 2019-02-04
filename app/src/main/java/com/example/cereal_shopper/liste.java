@@ -1,7 +1,9 @@
 package com.example.cereal_shopper;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class liste extends AppCompatActivity {
 
@@ -68,6 +74,7 @@ public class liste extends AppCompatActivity {
         public Fragment getItem(int i) {
             switch(i){
                 case 0:
+
                     Fragment f1 = new ListaSpesa();
                     return f1;
                 case 1:
@@ -84,4 +91,5 @@ public class liste extends AppCompatActivity {
             return 2;
         }
     }
+
 }

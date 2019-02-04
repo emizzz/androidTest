@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_LISTA = 10;
     private static final int REQUEST_CODE_DISPENSA = 20;
+    private static final int REQUEST_CODE_GROUP = 30;
+
 
 
     //private String[] groupsNames = new String[] {"Famiglia", "Conquilini"};
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
+/*
 
         //-----------------  USER LIST -----------------
         JSONObject item11 = new JSONObject();
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             //log something
         }
-
+*/
 
         /*create recycler view*/
         groupsListView = (RecyclerView) findViewById(R.id.groups_list);
@@ -125,14 +127,21 @@ public class MainActivity extends AppCompatActivity {
                 */
                 //add to lista
                 /*
-                 Intent intent = new Intent(getApplicationContext(),group.class);
+                 Intent intent = new Intent(getApplicationContext(),addToSpesa.class);
                 startActivityForResult(intent,REQUEST_CODE_LISTA);
                  */
 
                 //go to listadispensa
+                /*
+
                 Intent intent = new Intent(getApplicationContext(),liste.class);
 
                 startActivity(intent);
+                */
+                //see groupinfo
+
+                 Intent intent = new Intent(getApplicationContext(),group.class);
+                startActivityForResult(intent,REQUEST_CODE_GROUP);
 
             }
         });
@@ -202,6 +211,52 @@ public class MainActivity extends AppCompatActivity {
                 // and get whatever data you are adding
             }
         }
+        if (requestCode==REQUEST_CODE_GROUP) {
+            Bundle extras= data.getExtras();
+            if (extras != null) {
+                String newname = extras.getString("NEWNAME");
+                String oldname = extras.getString("OLDNAME");
+                //Toast.makeText(getApplicationContext(),oldname,Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getApplicationContext(),newname,Toast.LENGTH_SHORT).show();
+
+                try {
+                    int ii=0;
+                    boolean p=true;
+                    while((ii<groupsList.length())&& (p)) {
+                        if(groupsList.getJSONObject(ii).getString("title").equals(oldname)){
+                            p=false;
+                        }else
+                             ii++;
+                    }
+                    if(p){
+                        JSONObject item = new JSONObject();
+
+                        try{
+                            item.put("type", "group_list");
+                            item.put("title", newname);
+
+
+                            groupsList.put(item);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else {
+                        JSONObject nuovo = groupsList.getJSONObject(ii);
+                        nuovo.put("title", newname);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                groupsListAdapter = new List(this, groupsList);
+
+                groupsListView.setAdapter(groupsListAdapter);
+
+            }
+
+        }
+
 
     }
 }

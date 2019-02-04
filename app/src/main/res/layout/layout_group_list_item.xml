@@ -27,7 +27,7 @@
                 android:textSize="@dimen/text_size_large"
             />
 
-            <ImageView
+            <ImageButton
                 android:layout_alignParentRight="true"
                 android:tint="@color/colorPrimary"
                 android:id="@+id/group_item_icon1"
@@ -36,14 +36,17 @@
                 android:padding="@dimen/margin_padding_size_small"
                 android:src="@android:drawable/ic_menu_delete" />
 
-            <ImageView
-                android:layout_toLeftOf="@id/group_item_icon1"
-                android:tint="@color/colorPrimary"
-                android:id="@+id/group_item_icon2"
+            <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/group_item_icon1"
+                android:id="@+id/group_item_icon2"
+                android:tint="@color/colorPrimary"
                 android:padding="@dimen/margin_padding_size_small"
-                android:src="@android:drawable/ic_menu_my_calendar" />
+                android:src="@android:drawable/ic_menu_my_calendar"
+                />
+
+
 
 
         </RelativeLayout>

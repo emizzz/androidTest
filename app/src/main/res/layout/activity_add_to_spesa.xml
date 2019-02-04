@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ScrollView01"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/TextViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aggiungi Prodotto"
+            android:textSize="18pt"
+            android:layout_weight="2"
+            android:layout_marginStart="@dimen/margin_padding_size_medium"
+            android:layout_marginEnd="@dimen/margin_padding_size_medium"
+            android:layout_marginRight="@dimen/margin_padding_size_medium"
+            android:layout_marginBottom="@dimen/margin_padding_size_medium">
+        </TextView>
+
+        <EditText
+            android:id="@+id/EditTextName"
+            android:layout_height="wrap_content"
+            android:hint="Prodotto"
+            android:inputType="textPersonName"
+            android:layout_width="match_parent"
+            android:textSize="@dimen/text_size_medium"
+            android:layout_marginStart="@dimen/margin_padding_size_medium"
+            android:layout_marginEnd="@dimen/margin_padding_size_medium"
+            android:layout_marginRight="@dimen/margin_padding_size_medium"
+            android:layout_marginBottom="@dimen/margin_padding_size_medium"
+
+            android:layout_weight="2">
+        </EditText>
+
+        <EditText
+            android:id="@+id/EditTextCategory"
+            android:layout_height="wrap_content"
+            android:hint="Categoria"
+            android:inputType="textPersonName"
+            android:layout_width="match_parent"
+            android:textSize="@dimen/text_size_medium"
+            android:layout_marginStart="@dimen/margin_padding_size_medium"
+            android:layout_marginEnd="@dimen/margin_padding_size_medium"
+            android:layout_marginRight="@dimen/margin_padding_size_medium"
+            android:layout_marginBottom="@dimen/margin_padding_size_medium"
+
+            android:layout_weight="2">
+        </EditText>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quantità"
+                android:layout_gravity="center"
+                android:layout_weight="3"
+                android:textSize="@dimen/text_size_medium"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                android:layout_marginRight="@dimen/margin_padding_size_medium"
+                />
+            <NumberPicker
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/numberpicker"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                />
+
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/EditNotes"
+            android:layout_height="wrap_content"
+            android:hint="Note"
+            android:inputType="textPersonName"
+            android:layout_width="match_parent"
+            android:textSize="@dimen/text_size_medium"
+            android:layout_marginStart="@dimen/margin_padding_size_medium"
+            android:layout_marginEnd="@dimen/margin_padding_size_medium"
+            android:layout_marginRight="@dimen/margin_padding_size_medium"
+            android:layout_marginBottom="@dimen/margin_padding_size_medium"
+
+            android:layout_weight="2">
+        </EditText>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/addItemButton"
+            android:text="Aggiungi"
+            android:layout_marginStart="@dimen/margin_padding_size_medium"
+            android:layout_marginEnd="@dimen/margin_padding_size_medium"
+            android:layout_marginRight="@dimen/margin_padding_size_medium"
+            android:textSize="@dimen/text_size_medium"
+            />
+
+        <TextView
+            android:id="@+id/TitlePreferiti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Preferiti"
+            android:textSize="18pt"
+            android:layout_weight="2"
+            android:layout_marginStart="@dimen/margin_padding_size_medium"
+            android:layout_marginEnd="@dimen/margin_padding_size_medium"
+            android:layout_marginRight="@dimen/margin_padding_size_medium"
+            android:layout_marginBottom="@dimen/margin_padding_size_medium">
+        </TextView>
+    </LinearLayout>
+
+
+</ScrollView>
