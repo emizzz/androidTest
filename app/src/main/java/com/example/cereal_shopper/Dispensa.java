@@ -14,11 +14,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Dispensa extends Fragment{
-    private RecyclerView groupsListView;
-    private RecyclerView.Adapter groupsListAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
-    private JSONArray groupsList = new JSONArray();
+
+   // private JSONArray groupsList = new JSONArray();
 
 
     @Nullable
@@ -26,35 +24,24 @@ public class Dispensa extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
-        JSONObject item111 = new JSONObject();
-        JSONObject item222 = new JSONObject();
-        try{
-            item111.put("type", "product_list");
-            item111.put("title", "Caffe");
-            item111.put("description", "mocha");
-            item111.put("product_type", "list");      // "list" or "pantry"
-            item222.put("type", "product_list");
-            item222.put("title", "Pasta");
-            item222.put("description", "Spaghetti");
-            item222.put("product_type", "list");      // "list" or "pantry"
-            groupsList.put(item111);
-            groupsList.put(item222);
 
-        } catch (JSONException e) {
-            //log something
-        }
         View v = inflater.inflate(R.layout.fragment_dispensa, container, false);
-        groupsListView = (RecyclerView) v.findViewById(R.id.groups_list_disp);
+        liste.groupsListViewPant = (RecyclerView) v.findViewById(R.id.groups_list_disp);
 
-        mLayoutManager = new LinearLayoutManager(getContext());
-        groupsListView.setLayoutManager(mLayoutManager);
+        liste.mLayoutManagerPant = new LinearLayoutManager(getContext());
+        liste.groupsListViewPant.setLayoutManager(liste.mLayoutManagerPant);
 
         //groupsListAdapter = new List(groupsNames);
-        groupsListAdapter = new List(getContext(), groupsList);
+        liste.groupsListAdapterPant = new List(getContext(), liste.pantryList);
 
-        groupsListView.setAdapter(groupsListAdapter);
+        liste.groupsListViewPant.setAdapter(liste.groupsListAdapterPant);
 
 
         return v;
+    }
+    public void prova (){
+        liste.groupsListAdapterPant = new List(getContext(), liste.pantryList);
+
+        liste.groupsListViewPant.setAdapter(liste.groupsListAdapterPant);
     }
 }

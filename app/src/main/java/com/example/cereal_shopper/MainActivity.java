@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -21,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView groupsListView;
     private RecyclerView.Adapter groupsListAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    DbHandler dbHandler = new DbHandler(this, null, null, 1);
+
 
     private static final int REQUEST_CODE_LISTA = 10;
     private static final int REQUEST_CODE_DISPENSA = 20;
@@ -41,31 +45,40 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        groupsListView = (RecyclerView) findViewById(R.id.groups_list);
+        mLayoutManager = new LinearLayoutManager(this);
+        groupsListView.setLayoutManager(mLayoutManager);
+        groupsListView.setItemAnimator(new DefaultItemAnimator());
+        //groupsListView.setHasFixedSize(true);
 
 
         //populate list data
-
+      //  dbHandler.addHandler("group_list", "Famiglia");
 
 
         // ----------------- GROUP LIST -----------------
         JSONObject item1 = new JSONObject();
         JSONObject item2 = new JSONObject();
-
+        JSONObject item3 = new JSONObject();
         try{
             item1.put("type", "group_list");
             item1.put("title", "Famiglia");
             item2.put("type", "group_list");
             item2.put("title", "Coinquilini");
+            item3.put("type", "group_list");
+            item3.put("title", "Amici");
 
             groupsList.put(item1);
             groupsList.put(item2);
+            groupsList.put(item3);
+
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-
 /*
+
 
         //-----------------  USER LIST -----------------
         JSONObject item11 = new JSONObject();
@@ -104,9 +117,6 @@ public class MainActivity extends AppCompatActivity {
 */
 
         /*create recycler view*/
-        groupsListView = (RecyclerView) findViewById(R.id.groups_list);
-        mLayoutManager = new LinearLayoutManager(this);
-        groupsListView.setLayoutManager(mLayoutManager);
 
         //groupsListAdapter = new List(groupsNames);
         groupsListAdapter = new List(this, groupsList);
@@ -179,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 groupsListAdapter = new List(this, groupsList);
 
                 groupsListView.setAdapter(groupsListAdapter);
+
                 // and get whatever data you are adding
             }
         }
@@ -229,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
                              ii++;
                     }
                     if(p){
+
                         JSONObject item = new JSONObject();
 
                         try{
@@ -241,6 +253,7 @@ public class MainActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        //dbHandler.updateHandler("group_list",oldname)
                     }
                     else {
                         JSONObject nuovo = groupsList.getJSONObject(ii);
@@ -249,6 +262,8 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+           //     dbHandler.addHandler("group_list",newname);
                 groupsListAdapter = new List(this, groupsList);
 
                 groupsListView.setAdapter(groupsListAdapter);
@@ -258,5 +273,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+    public void prova (){
+        groupsListAdapter = new List(this, groupsList);
+
+        groupsListView.setAdapter(groupsListAdapter);
     }
 }

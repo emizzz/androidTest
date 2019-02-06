@@ -17,51 +17,42 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ListaSpesa extends Fragment{
-    private RecyclerView groupsListView;
-    private RecyclerView.Adapter groupsListAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private FloatingActionButton fab;
-    private JSONArray groupsList = new JSONArray();
 
+    private FloatingActionButton fab;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
-        JSONObject item111 = new JSONObject();
-        try{
-            item111.put("type", "product_list");
-            item111.put("title", "Latte");
-            item111.put("description", "parzialmente scremato");
-            item111.put("product_type", "list");      // "list" or "pantry"
 
-            groupsList.put(item111);
-
-        } catch (JSONException e) {
-            //log something
-        }
         View v = inflater.inflate(R.layout.fragment_lista_spesa, container, false);
-        groupsListView = (RecyclerView) v.findViewById(R.id.groups_list);
+        liste.groupsListViewList = (RecyclerView) v.findViewById(R.id.groups_list);
 
-        mLayoutManager = new LinearLayoutManager(getContext());
-        groupsListView.setLayoutManager(mLayoutManager);
+        liste.mLayoutManagerList = new LinearLayoutManager(getContext());
+        liste.groupsListViewList.setLayoutManager(liste.mLayoutManagerList);
 
         //groupsListAdapter = new List(groupsNames);
-        groupsListAdapter = new List(getContext(), groupsList);
 
-        groupsListView.setAdapter(groupsListAdapter);
+        liste.groupsListAdapterList = new List(getContext(),liste.listList );
+        liste.groupsListViewList.setAdapter( liste.groupsListAdapterList);
 
         fab = (FloatingActionButton) v.findViewById(R.id.addtospesa);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),addToSpesa.class);
+
                 getActivity().startActivity(intent);
 
             }
         });
 
         return v;
+    }
+    public void prova (){
+        liste.groupsListAdapterList = new List(getContext(), liste.listList);
+
+        liste.groupsListViewList.setAdapter( liste.groupsListAdapterList);
     }
 }

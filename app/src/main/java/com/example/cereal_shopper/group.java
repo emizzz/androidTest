@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,7 @@ public class group extends AppCompatActivity {
     private RecyclerView.Adapter groupsListAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private JSONArray groupsList = new JSONArray();
+    private SearchView sV;
     private String realName;
     private String oldName;
     @Override
@@ -42,6 +44,8 @@ public class group extends AppCompatActivity {
             name.setText(realName);
         }
         changeNameBtn= (ImageButton) findViewById(R.id.modifyName);
+
+
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         changeNameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,9 +88,9 @@ public class group extends AppCompatActivity {
         groupsListView.setLayoutManager(mLayoutManager);
 
         //groupsListAdapter = new List(groupsNames);
-        groupsListAdapter = new List(this, groupsList);
+      //  groupsListAdapter = new List(this, groupsList);
 
-        groupsListView.setAdapter(groupsListAdapter);
+       // groupsListView.setAdapter(groupsListAdapter);
 
         fbtn= (FloatingActionButton) findViewById(R.id.AddMember);
         fbtn.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +125,7 @@ public class group extends AppCompatActivity {
             }
         });
     }
+
 
 }
 

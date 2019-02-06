@@ -9,11 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
 public class addItem extends AppCompatActivity {
     int NUMBER_OF_VALUES = 21; //num of values in the picker
     int PICKER_RANGE = 50;
     FloatingActionButton addButton;
+    String oldName;
+    String realName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,12 @@ public class addItem extends AppCompatActivity {
         weight.setMinValue(0);
         weight.setMaxValue(displayedValues.length - 1);
         weight.setDisplayedValues(displayedValues);
-
+        if (getIntent().getStringExtra("NAME")!=null) {
+            realName=getIntent().getStringExtra("NAME");
+            oldName=realName;
+            TextView name = findViewById(R.id.edittextname);
+            name.setText(realName);
+        }
 
         addButton= (FloatingActionButton) findViewById(R.id.checkbutton);
 
