@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,12 +18,26 @@ public class addItem extends AppCompatActivity {
     FloatingActionButton addButton;
     String oldName;
     String realName;
+    String description;
+
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
 
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.left);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         final NumberPicker quantity = findViewById(R.id.numberpicker);
         final NumberPicker weight = findViewById(R.id.pickerweight);
@@ -44,6 +59,11 @@ public class addItem extends AppCompatActivity {
             oldName=realName;
             TextView name = findViewById(R.id.edittextname);
             name.setText(realName);
+        }
+        if (getIntent().getStringExtra("DESCRIPTION")!=null) {
+            description=getIntent().getStringExtra("DESCRIPTION");
+            TextView name = findViewById(R.id.editnotes);
+            name.setText(description);
         }
 
         addButton= (FloatingActionButton) findViewById(R.id.checkbutton);
@@ -76,7 +96,7 @@ public class addItem extends AppCompatActivity {
                 data.putExtra("QUANTITY",quantityInt);
                 data.putExtra("WEIGHT",weightInt);
                 data.putExtra("PRICE",priceString);
-                data.putExtra("EXPIRATION",quantityInt);
+                data.putExtra("EXPIRATION",expirationString);
                 data.putExtra("NOTE",notesString);
                 setResult(Activity.RESULT_OK,data);
                 finish();

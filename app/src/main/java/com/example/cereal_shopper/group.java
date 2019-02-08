@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +26,7 @@ public class group extends AppCompatActivity {
     ImageButton changeNameBtn;
     FloatingActionButton fbtn;
     Button updateBtn;
+    Toolbar toolbar;
     private RecyclerView groupsListView;
     private RecyclerView.Adapter groupsListAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -34,8 +36,19 @@ public class group extends AppCompatActivity {
     private String oldName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.left);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }
+        });
 
         if (getIntent().getStringExtra("NAME")!=null) {
             realName=getIntent().getStringExtra("NAME");
@@ -88,9 +101,9 @@ public class group extends AppCompatActivity {
         groupsListView.setLayoutManager(mLayoutManager);
 
         //groupsListAdapter = new List(groupsNames);
-      //  groupsListAdapter = new List(this, groupsList);
+        groupsListAdapter = new List(this, groupsList);
 
-       // groupsListView.setAdapter(groupsListAdapter);
+        groupsListView.setAdapter(groupsListAdapter);
 
         fbtn= (FloatingActionButton) findViewById(R.id.AddMember);
         fbtn.setOnClickListener(new View.OnClickListener() {

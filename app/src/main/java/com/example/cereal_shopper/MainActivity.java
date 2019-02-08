@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
@@ -38,12 +39,18 @@ public class MainActivity extends AppCompatActivity {
     private JSONArray groupsList = new JSONArray();
 
     private FloatingActionButton fab;
+    Toolbar toolbar;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         groupsListView = (RecyclerView) findViewById(R.id.groups_list);
         mLayoutManager = new LinearLayoutManager(this);
@@ -130,25 +137,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //add to dispensa
-                /*
-                Intent intent = new Intent(getApplicationContext(),addItem.class);
-                startActivityForResult(intent,REQUEST_CODE_DISPENSA);
-                */
-                //add to lista
-                /*
-                 Intent intent = new Intent(getApplicationContext(),addToSpesa.class);
-                startActivityForResult(intent,REQUEST_CODE_LISTA);
-                 */
 
-                //go to listadispensa
-                /*
-
-                Intent intent = new Intent(getApplicationContext(),liste.class);
-
-                startActivity(intent);
-                */
-                //see groupinfo
 
                  Intent intent = new Intent(getApplicationContext(),group.class);
                 startActivityForResult(intent,REQUEST_CODE_GROUP);

@@ -36,7 +36,7 @@
         android:layout_marginRight="@dimen/margin_padding_size_medium"
         android:layout_marginBottom="@dimen/margin_padding_size_medium"
         android:clickable="true"
-        android:src="@android:drawable/ic_menu_add" />
+        android:src="@drawable/plus48" />
     </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

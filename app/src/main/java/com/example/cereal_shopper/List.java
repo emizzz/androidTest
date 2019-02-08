@@ -30,6 +30,8 @@ public class List extends RecyclerView.Adapter {
     private static final int REQUEST_CODE_GROUP = 30;
     private static final int REQUEST_CODE_LISTA = 10;
     private static final int REQUEST_CODE_DISPENSA = 20;
+    private static final int REQUEST_CODE_RECAP = 40;
+
     private DbHandler dbHandler;
 
     // GROUP LIST VIEWHOLDER
@@ -39,6 +41,7 @@ public class List extends RecyclerView.Adapter {
         public ImageButton delbtn;
 
         public View mView;
+
         public GroupListViewHolder(View v) {
             super(v);
             mView = v;
@@ -48,7 +51,7 @@ public class List extends RecyclerView.Adapter {
             mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(),liste.class);
+                    Intent intent = new Intent(v.getContext(), liste.class);
                     v.getContext().startActivity(intent);
                 }
             });
@@ -56,10 +59,10 @@ public class List extends RecyclerView.Adapter {
             userbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(),group.class);
-                    String name=(String) ((TextView) mView.findViewById(R.id.group_item_name)).getText();
+                    Intent intent = new Intent(v.getContext(), group.class);
+                    String name = (String) ((TextView) mView.findViewById(R.id.group_item_name)).getText();
                     intent.putExtra("NAME", name);
-                    ((Activity) v.getContext()).startActivityForResult(intent,REQUEST_CODE_GROUP);
+                    ((Activity) v.getContext()).startActivityForResult(intent, REQUEST_CODE_GROUP);
                 }
             });
             delbtn = (ImageButton) mView.findViewById(R.id.group_item_icon1);
@@ -76,6 +79,7 @@ public class List extends RecyclerView.Adapter {
         public Button counter_btn;
 
         public View mView;
+
         public UserListViewHolder(View v) {
             super(v);
             mView = v;
@@ -97,28 +101,37 @@ public class List extends RecyclerView.Adapter {
     // PRODUCT LIST VIEWHOLDER
     public static class ProductListViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
-        public TextView description;
+        public TextView subtitle;
+        public int quantity;
         public ImageView icon;
         public View mView;
         public ImageButton delbtn;
+        public boolean isList;
 
         public ProductListViewHolder(View v) {
 
             super(v);
             mView = v;
-            title =  mView.findViewById(R.id.product_item_name);
-            description = mView.findViewById(R.id.product_item_description);
+            title = mView.findViewById(R.id.product_item_name);
+            subtitle = mView.findViewById(R.id.product_item_description);
             icon = mView.findViewById(R.id.product_item_image);
 
-           delbtn = (ImageButton) mView.findViewById(R.id.product_item_icon1);
+
+            delbtn = (ImageButton) mView.findViewById(R.id.product_item_icon1);
 
             delbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(),addItem.class);
-                    String name=(String) ((TextView) mView.findViewById(R.id.product_item_name)).getText();
-                    intent.putExtra("NAME", name);
-                    ((Activity) v.getContext()).startActivityForResult(intent,REQUEST_CODE_DISPENSA);
+                    if (isList) {
+                        Intent intent = new Intent(v.getContext(), addItem.class);
+                        String name = (String) ((TextView) mView.findViewById(R.id.product_item_name)).getText();
+                        intent.putExtra("NAME", name);
+                        String description = (String) ((TextView) mView.findViewById(R.id.product_item_description)).getText();
+                        intent.putExtra("DESCRIPTION", description);
+                        intent.putExtra("QUANTITY", quantity);
+                        ((Activity) v.getContext()).startActivityForResult(intent, REQUEST_CODE_DISPENSA);
+                    }
+
                 }
             });
 
@@ -137,13 +150,13 @@ public class List extends RecyclerView.Adapter {
     // Create new views (invoked by the layout manager)
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                     int viewType) {
+                                                      int viewType) {
         View view;
 
         switch (viewType) {
             case 0:     //0 == group_list
                 view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.layout_group_list_item, parent, false);
+                        .inflate(R.layout.layout_group_list_item, parent, false);
                 return new GroupListViewHolder(view);
 
             case 1:    //1 == user_list
@@ -153,7 +166,7 @@ public class List extends RecyclerView.Adapter {
 
             case 2:    //2 == product_list
                 view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_product_list_item, parent, false);
+                        .inflate(R.layout.layout_product_list_item, parent, false);
                 return new ProductListViewHolder(view);
 
             default:
@@ -189,8 +202,7 @@ public class List extends RecyclerView.Adapter {
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder,  int i) {
-        System.out.println(i);
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int i) {
         String type = "";
 
         try {
@@ -210,7 +222,7 @@ public class List extends RecyclerView.Adapter {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
+                //viene eliminato il gruppo clickato
                 ((GroupListViewHolder) holder).delbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -220,10 +232,10 @@ public class List extends RecyclerView.Adapter {
                         alertDialog.setPositiveButton("Si", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 data.remove(holder.getAdapterPosition());
-                                ((MainActivity)mContext).prova();
+                                ((MainActivity) mContext).prova();
                                 //notifyDataSetChanged();
                                 //notifyItemRemoved(holder.getAdapterPosition());
-                               // notifyItemRangeChanged(holder.getAdapterPosition(), getItemCount()-1);
+                                // notifyItemRangeChanged(holder.getAdapterPosition(), getItemCount()-1);
                                 dialog.cancel();
 
                             }
@@ -235,7 +247,6 @@ public class List extends RecyclerView.Adapter {
                         });
                         alertDialog.show();
                     }
-
 
 
                 });
@@ -262,12 +273,19 @@ public class List extends RecyclerView.Adapter {
                 try {
 
                     ((ProductListViewHolder) holder).title.setText(data.getJSONObject(i).getString("title"));
-                    ((ProductListViewHolder) holder).description.setText(data.getJSONObject(i).getString("description"));
+                    //((ProductListViewHolder) holder).description.setText(data.getJSONObject(i).getString("description"));
+                    ((ProductListViewHolder) holder).quantity = (data.getJSONObject(i).getInt("quantity"));
 
-                    if(data.getJSONObject(i).getString("product_type").equals("list")){
-                        //((ProductListViewHolder) holder).icon.setImageDrawable();
+                    if (data.getJSONObject(i).getString("product_type").equals("list")) {
+
+                        ((ProductListViewHolder) holder).subtitle.setText(data.getJSONObject(i).getString("description"));
+                        ((ProductListViewHolder) holder).isList = true;
+                        ((ProductListViewHolder) holder).delbtn.setImageResource(R.drawable.check24);
                     }
-                    if(data.getJSONObject(i).getString("product_type").equals("pantry")){
+                    if (data.getJSONObject(i).getString("product_type").equals("pantry")) {
+
+                        ((ProductListViewHolder) holder).subtitle.setText(data.getJSONObject(i).getString("expiration"));
+                        ((ProductListViewHolder) holder).isList = false;
                         //((ProductListViewHolder) holder).icon.setImageDrawable();
                     }
 
@@ -275,6 +293,56 @@ public class List extends RecyclerView.Adapter {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                //viene clickato il prodotto e si apre la schermata di riassunto elemento
+                ((ProductListViewHolder) holder).mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        boolean isList = ((ProductListViewHolder) holder).isList;
+                        String title = ((ProductListViewHolder) holder).title.getText().toString();
+                        Intent intent = ((liste) mContext).getRecap(isList, title);
+                        ((Activity) v.getContext()).startActivityForResult(intent, REQUEST_CODE_RECAP);
+
+                    }
+                });
+                //viene eliminato un elemento dalla lista rpodotti
+                ((ProductListViewHolder) holder).delbtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //viene eliminato dalla dispensa
+                        if(!((ProductListViewHolder) holder).isList){
+                            AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+                            alertDialog.setTitle("Aggiungere elemento alla Lista della Spesa?");
+                            alertDialog.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String name=(String) ((TextView) ((ProductListViewHolder) holder).mView.findViewById(R.id.product_item_name)).getText();
+
+                                    ((liste) mContext).removeItemPantry(true,name );
+
+                                    dialog.cancel();
+
+                                }
+                            });
+                            alertDialog.setNegativeButton("No, elimina definitivamente", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String name=(String) ((TextView) ((ProductListViewHolder) holder).mView.findViewById(R.id.product_item_name)).getText();
+                                    ((liste) mContext).removeItemPantry(false,name);
+                                    dialog.cancel();
+                                }
+                            });
+                            alertDialog.show();
+                            //viene chiamata la schermata per aggiungere a dispensa (ed eliminare da lista)
+                        } else{
+                            Intent intent = new Intent(v.getContext(), addItem.class);
+                            String name = (String) ((TextView) ((ProductListViewHolder) holder).mView.findViewById(R.id.product_item_name)).getText();
+                            intent.putExtra("NAME", name);
+                            String description = (String) ((TextView) ((ProductListViewHolder) holder).mView.findViewById(R.id.product_item_description)).getText();
+                            intent.putExtra("DESCRIPTION", description);
+                            intent.putExtra("QUANTITY", ((ProductListViewHolder) holder).quantity);
+                            ((Activity) v.getContext()).startActivityForResult(intent, REQUEST_CODE_DISPENSA);
+                        }
+                    }
+                });
+
                 break;
         }
         //FINEPROVA
@@ -286,10 +354,10 @@ public class List extends RecyclerView.Adapter {
     public int getItemCount() {
         return this.size;
     }
-    public void removeItem(int position){
+
+    public void removeItem(int position) {
         data.remove(position);
         notifyItemRemoved(position);
     }
-
 
 }
