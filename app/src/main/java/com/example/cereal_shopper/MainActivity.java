@@ -12,19 +12,23 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
+import android.database.Cursor;
+import android.util.Log;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
+
 public class MainActivity extends AppCompatActivity {
 
+    private DbAdapter dbHelper;
+    private Cursor cursor;
     private RecyclerView groupsListView;
     private RecyclerView.Adapter groupsListAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
-    DbHandler dbHandler = new DbHandler(this, null, null, 1);
 
 
     private static final int REQUEST_CODE_LISTA = 10;
@@ -60,8 +64,24 @@ public class MainActivity extends AppCompatActivity {
 
 
         //populate list data
-      //  dbHandler.addHandler("group_list", "Famiglia");
+        //  dbHandler.addHandler("group_list", "Famiglia");
 
+        /*TESTTTTTTTTTT*/
+
+        dbHelper = new DbAdapter(this);
+        dbHelper.open();
+        dbHelper.createGroup("example1");
+        cursor = dbHelper.fetchAll();
+
+
+        startManagingCursor(cursor);
+        while ( cursor.moveToNext() ) {
+            String contactID = cursor.getString( cursor.getColumnIndex(DbAdapter.KEY_NAME) );
+            Log.d("error: ", "contact id = " + contactID);
+        }
+        cursor.close();
+        dbHelper.close();
+        /*END TESTTTTTTTTTT*/
 
         // ----------------- GROUP LIST -----------------
         JSONObject item1 = new JSONObject();

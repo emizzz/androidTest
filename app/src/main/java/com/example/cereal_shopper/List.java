@@ -32,8 +32,6 @@ public class List extends RecyclerView.Adapter {
     private static final int REQUEST_CODE_DISPENSA = 20;
     private static final int REQUEST_CODE_RECAP = 40;
 
-    private DbHandler dbHandler;
-
     // GROUP LIST VIEWHOLDER
     public static class GroupListViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
