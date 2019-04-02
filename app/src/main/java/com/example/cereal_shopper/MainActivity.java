@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     Toolbar toolbar;
     ListView listView;
+    Global globalApp;
+    List<DbGroup> db_groups;
 
 
 
@@ -54,30 +56,18 @@ public class MainActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.group_list);
 
         db = new DatabaseHelper(getApplicationContext());
-
+        globalApp = (Global)getApplicationContext();
 
         /*---------------------------------FETCH GROUPS---------------------------------*/
         //read database and get all the user's groups
-        Global globalApp = (Global)getApplicationContext();
-        db = new DatabaseHelper(getApplicationContext());
-        ArrayList<DbGroup> groups = new ArrayList<>();
-        List<DbGroup> db_groups = db.getUserGroups(globalApp.getCurrentUser().getId());
 
-        //insert groups in the adapter "adapterGroupList"
+        db = new DatabaseHelper(getApplicationContext());
+        db_groups = db.getUserGroups(globalApp.getCurrentUser().getId());
+
+        //link groups to template list
         adapter = new adapterGroupList(this, db_groups);
         listView.setAdapter(adapter);
 
-
-        /*---------------------------------MODIFY GROUP---------------------------------*/
-        /*
-        ImageButton modify_group = (ImageButton)findViewById(R.id.group_item_icon1);
-        modify_group.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.v("ImageButton", "Clicked!");
-            }
-        });
-        */
 
 
         /*---------------------------------CREATE GROUP---------------------------------*/

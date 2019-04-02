@@ -79,6 +79,9 @@ public class AddGroupItem extends AppCompatActivity {
 
         //get all the users
         List<DbUser> db_users = db.getUsers();
+        DbUser currentUser = globalApp.getCurrentUser();
+        boolean userAlreadyInList = false;
+        boolean check = true;
 
         for(DbUser _user : db_users) {
             //autocomplete items
@@ -89,8 +92,16 @@ public class AddGroupItem extends AppCompatActivity {
                 if( _user.getGroupIds().contains( currentGroup.getId() ) ){
                     to_add_users.add(_user);
                 }
+                if(_user.getId() == currentUser.getId() && check){
+                    userAlreadyInList = true;
+                    check = false;
+                }
             }
         }
+        if(!userAlreadyInList){
+            to_add_users.add(currentUser);
+        }
+
 
 
         //link the selected users to the template's list

@@ -1,8 +1,8 @@
 package com.example.cereal_shopper;
 
-
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.ContextWrapper;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -13,9 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +37,7 @@ public class adapterGroupList extends ArrayAdapter<DbGroup> {
          if(listItem == null)
             listItem = LayoutInflater.from(mContext).inflate(R.layout.layout_group_list_item, parent,false);
 
-        DbGroup currentGroup = groupList.get(position);
+        final DbGroup currentGroup = groupList.get(position);
 
         TextView name = (TextView) listItem.findViewById(R.id.group_item_name);
         name.setText(currentGroup.getTitle() + " " + currentGroup.getId());
@@ -66,17 +64,47 @@ public class adapterGroupList extends ArrayAdapter<DbGroup> {
         delete_from_group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Global globalApp = (Global)v.getContext().getApplicationContext();
 
-                //remove the group id from the current logged user
-                DbUser currentUser = globalApp.getCurrentUser();
-                Log.d("------", Integer.toString(currentUser.getId()));
+                final View _v = v;
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+                builder1.setMessage("Sei sicuro di voler uscire dal gruppo?");
+                builder1.setCancelable(true);
 
+                builder1.setPositiveButton(
+                        "Sì",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
 
+                                Global globalApp = (Global)_v.getContext().getApplicationContext();
+                                //remove the group id from the current logged user
+                                DbUser currentUser = globalApp.getCurrentUser();
 
-                /*Intent intent=new Intent(getContext(), AddGroupItem.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("GROUP_ID", groupList.get(position).getId());
-                v.getContext().startActivity(intent);*/
+                                if( currentUser.getGroupIds().contains( currentGroup.getId() ) ){
+                                    ArrayList<Integer> user_groups = currentUser.getGroupIds();
+                                    user_groups.remove( new Integer(currentGroup.getId()) );
+                                    currentUser.setGroupId( user_groups );
+                                    long result = db.updateUser(currentUser);
+                                    if(result > 0){
+                                        Intent intent=new Intent(getContext(), MainActivity.class);
+                                        _v.getContext().startActivity(intent);
+                                        Log.d("adapterGroupList", "User deleted from group");
+                                    }
+                                }
+
+                                dialog.cancel();
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
             }
         });
 
@@ -86,3 +114,4 @@ public class adapterGroupList extends ArrayAdapter<DbGroup> {
     }
 
 }
+
