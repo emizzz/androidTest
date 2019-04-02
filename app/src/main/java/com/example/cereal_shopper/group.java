@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -100,8 +99,8 @@ public class group extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         groupsListView.setLayoutManager(mLayoutManager);
 
-        //groupsListAdapter = new List(groupsNames);
-        groupsListAdapter = new List(this, groupsList);
+        //groupsListAdapter = new CustomList(groupsNames);
+        groupsListAdapter = new CustomList(this, groupsList);
 
         groupsListView.setAdapter(groupsListAdapter);
 

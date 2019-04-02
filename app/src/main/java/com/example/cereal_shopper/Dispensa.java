@@ -9,10 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class Dispensa extends Fragment{
 
 
@@ -31,8 +27,8 @@ public class Dispensa extends Fragment{
         liste.mLayoutManagerPant = new LinearLayoutManager(getContext());
         liste.groupsListViewPant.setLayoutManager(liste.mLayoutManagerPant);
 
-        //groupsListAdapter = new List(groupsNames);
-        liste.groupsListAdapterPant = new List(getContext(), liste.pantryList);
+        //groupsListAdapter = new CustomList(groupsNames);
+        liste.groupsListAdapterPant = new CustomList(getContext(), liste.pantryList);
 
         liste.groupsListViewPant.setAdapter(liste.groupsListAdapterPant);
 
@@ -40,7 +36,7 @@ public class Dispensa extends Fragment{
         return v;
     }
     public void prova (){
-        liste.groupsListAdapterPant = new List(getContext(), liste.pantryList);
+        liste.groupsListAdapterPant = new CustomList(getContext(), liste.pantryList);
 
         liste.groupsListViewPant.setAdapter(liste.groupsListAdapterPant);
     }

@@ -3,12 +3,10 @@ package com.example.cereal_shopper;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -170,7 +168,7 @@ public class liste extends AppCompatActivity {
                     //log something
                 }
 
-                groupsListAdapterList = new List(this, listList);
+                groupsListAdapterList = new CustomList(this, listList);
 
                 groupsListViewList.setAdapter(groupsListAdapterList);
 
@@ -212,9 +210,9 @@ public class liste extends AppCompatActivity {
                 }
 
                 if (ii != listList.length()) listList.remove(ii);
-                groupsListAdapterPant = new List(this, pantryList);
+                groupsListAdapterPant = new CustomList(this, pantryList);
                 groupsListViewPant.setAdapter(groupsListAdapterPant);
-                groupsListAdapterList = new List(this, listList);
+                groupsListAdapterList = new CustomList(this, listList);
                 groupsListViewList.setAdapter(groupsListAdapterList);
                 // and get whatever data you are adding
             }
@@ -250,7 +248,7 @@ public class liste extends AppCompatActivity {
                     } catch (JSONException e) {
                         //log something
                     }
-                    groupsListAdapterList = new List(this, listList);
+                    groupsListAdapterList = new CustomList(this, listList);
                     groupsListViewList.setAdapter(groupsListAdapterList);
                 } else {
                     int ii = 0;
@@ -268,7 +266,7 @@ public class liste extends AppCompatActivity {
                     } catch (JSONException e) {
                         //log something
                     }
-                    groupsListAdapterPant = new List(this, pantryList);
+                    groupsListAdapterPant = new CustomList(this, pantryList);
                     groupsListViewPant.setAdapter(groupsListAdapterPant);
                 }
             }
@@ -346,13 +344,13 @@ public class liste extends AppCompatActivity {
                 //log something
             }
 
-            groupsListAdapterList = new List(this, listList);
+            groupsListAdapterList = new CustomList(this, listList);
 
             groupsListViewList.setAdapter(groupsListAdapterList);
         }
         pantryList.remove(ii);
 
-        groupsListAdapterPant = new List(this, pantryList);
+        groupsListAdapterPant = new CustomList(this, pantryList);
         groupsListViewPant.setAdapter(groupsListAdapterPant);
     }
 }

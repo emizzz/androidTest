@@ -2,32 +2,248 @@ package com.example.cereal_shopper;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "mydatabase.db";
-    private static final int DATABASE_VERSION = 5;
-    private static final String DATABASE_CREATE = "create table groups (_id integer primary key autoincrement, name text not null);";
+
+    // Logcat tag
+    private static final String LOG = "DatabaseHelper";
+
+    // Database Version
+    private static final int DATABASE_VERSION = 11;
+
+    // Database Name
+    private static final String DATABASE_NAME = "cerealShopper";
+
+    // Table Names
+    private static final String TABLE_GROUPS = "groups";
+    private static final String TABLE_USERS = "users";
+    private static final String TABLE_PRODUCTS = "products";
+    private static final String TABLE_CATEGORIES = "categories";
+
+    // Common column names
+    private static final String KEY_ID = "id";
+    private static final String KEY_CREATED_AT = "created_at";
+
+    // GROUPS Table - column names
+    private static final String KEY_GROUP_TITLE = "title";
+
+    // USERS Table - column names
+    private static final String KEY_USER_NAME = "name";
+    private static final String KEY_USER_EMAIL = "email";
+    private static final String KEY_USER_BALANCE = "balance";
+    private static final String KEY_USER_GROUP_IDS = "group_id";
+
+    // PRODUCTS Table - column names
+    private static final String KEY_PRODUCT_TYPE = "type";
+    private static final String KEY_PRODUCT_GROUP_ID = "group_id";
+    private static final String KEY_PRODUCT_LIKED = "liked";
+    private static final String KEY_PRODUCT_NAME = "name";
+    private static final String KEY_PRODUCT_CATEGORY_ID = "category_id";
+    private static final String KEY_PRODUCT_QUANTITY = "quantity";
+    private static final String KEY_PRODUCT_WEIGHT = "weight";
+    private static final String KEY_PRODUCT_PRICE = "price";
+    private static final String KEY_PRODUCT_EXPIRY = "expiry";
+    private static final String KEY_PRODUCT_NOTES = "notes";
+
+    // CATEGORIES Table - column names
+    private static final String KEY_CATEGORIES_NAME = "name";
+
+
+    // GROUPS table create statement
+    private static final String CREATE_TABLE_GROUPS = "CREATE TABLE " + TABLE_GROUPS + "("
+            + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + KEY_GROUP_TITLE + " TEXT,"
+            + KEY_CREATED_AT + " INTEGER" + ")";
+
+    // USERS table create statement
+    private static final String CREATE_TABLE_USERS = "CREATE TABLE " + TABLE_USERS + "("
+            + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + KEY_USER_NAME + " TEXT,"
+            + KEY_USER_EMAIL + " TEXT,"
+            + KEY_USER_BALANCE + " INTEGER,"
+            + KEY_USER_GROUP_IDS + " TEXT,"
+            + KEY_CREATED_AT + " INTEGER" + ")";
+
+    // PRODUCTS table create statement
+    private static final String CREATE_TABLE_PRODUCTS = "CREATE TABLE " + TABLE_PRODUCTS + "("
+            + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + KEY_PRODUCT_TYPE + " TEXT,"
+            + KEY_PRODUCT_GROUP_ID + " INTEGER,"
+            + KEY_PRODUCT_LIKED + " INTEGER,"
+            + KEY_PRODUCT_NAME + " TEXT,"
+            + KEY_PRODUCT_CATEGORY_ID + " INTEGER,"
+            + KEY_PRODUCT_QUANTITY + " INTEGER,"
+            + KEY_PRODUCT_WEIGHT + " INTEGER,"
+            + KEY_PRODUCT_PRICE + " INTEGER,"
+            + KEY_PRODUCT_EXPIRY + " INTEGER,"
+            + KEY_PRODUCT_NOTES + " TEXT,"
+            + KEY_CREATED_AT + " INTEGER" + ")";
+
+    // CATEGORIES table create statement
+    private static final String CREATE_TABLE_CATEGORIES = "CREATE TABLE " + TABLE_CATEGORIES + "("
+            + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + KEY_CATEGORIES_NAME + " TEXT,"
+            + KEY_CREATED_AT + " INTEGER" + ")";
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase database) {
-        database.execSQL(DATABASE_CREATE);
+    public void onCreate(SQLiteDatabase db) {
+
+        // creating required tables
+        db.execSQL(CREATE_TABLE_GROUPS);
+        db.execSQL(CREATE_TABLE_USERS);
+        db.execSQL(CREATE_TABLE_PRODUCTS);
+        db.execSQL(CREATE_TABLE_CATEGORIES);
     }
 
     @Override
-    public void onUpgrade( SQLiteDatabase database, int oldVersion, int newVersion ) {
-        database.execSQL("DROP TABLE IF EXISTS groups");
-        onCreate(database);
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // on upgrade drop older tables
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_GROUPS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORIES);
+
+        // create new tables
+        onCreate(db);
     }
+
+    //---------------------------------------------GROUPS METHODS---------------------------------------------
+
+    /*
+    * EXAMPLE
+    * DbGroup group = new DbGroup("group name example");
+    * long new_group_id = db.createGroup(group);
+    */
+    public long createGroup(DbGroup _group) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_GROUP_TITLE, _group.getTitle());
+        values.put(KEY_CREATED_AT, _group.getCreationDate());
+
+        long group_id = db.insert(TABLE_GROUPS, null, values);
+        return group_id;
+    }
+
+    public DbGroup getGroup(int _id){
+        DbGroup new_group_copy = new DbGroup();
+        String selectQuery = "SELECT  * FROM " + TABLE_GROUPS + " WHERE " + KEY_ID +  " = " + _id;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if( cursor != null && cursor.moveToFirst() ){
+            new_group_copy.setId( cursor.getInt( cursor.getColumnIndex(KEY_ID)) );
+            new_group_copy.setTitle( cursor.getString( cursor.getColumnIndex(KEY_GROUP_TITLE)) );
+            new_group_copy.setCreationDate( cursor.getLong( cursor.getColumnIndex(KEY_CREATED_AT)) );
+        }
+
+        return new_group_copy;
+    }
+
+    public int updateGroup(DbGroup _group){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_GROUP_TITLE, _group.getTitle());
+
+        int group_id = db.update(TABLE_GROUPS, values, KEY_ID + "=" + _group.getId(),null);
+        return group_id;
+    }
+
+    public List<DbGroup> getGroups() {
+        List<DbGroup> groups = new ArrayList<DbGroup>();
+        String selectQuery = "SELECT  * FROM " + TABLE_GROUPS + " ORDER BY " + KEY_GROUP_TITLE +  " ASC";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()) {
+            do {
+                DbGroup _group = new DbGroup();
+                _group.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+                _group.setTitle((c.getString(c.getColumnIndex(KEY_GROUP_TITLE))));
+                _group.setCreationDate(c.getInt(c.getColumnIndex(KEY_CREATED_AT)));
+
+                groups.add(_group);
+
+            } while (c.moveToNext());
+        }
+
+        return groups;
+    }
+
+    //---------------------------------------------USERS METHODS---------------------------------------------
+
+    /*
+     * EXAMPLE
+     *  DbUser newUser = new DbUser("Gianni", "gianni@gianni.it", 13, 9);
+     *  long new_user_id = db.createUser(newUser);
+     */
+    public long createUser(DbUser _user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_USER_NAME, _user.getName());
+        values.put(KEY_USER_EMAIL, _user.getEmail());
+        values.put(KEY_USER_BALANCE, _user.getBalance());
+        values.put(KEY_USER_GROUP_IDS, _user.getSerializedGroupId());
+        values.put(KEY_CREATED_AT, _user.getCreationDate());
+
+        long user_id = db.insert(TABLE_USERS, null, values);
+        return user_id;
+    }
+
+    public List<DbUser> getUsers() {
+        List<DbUser> users = new ArrayList<DbUser>();
+        String selectQuery = "SELECT  * FROM " + TABLE_USERS + " ORDER BY " + KEY_USER_NAME +  " ASC";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()) {
+            do {
+                DbUser _user = new DbUser();
+                _user.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+                _user.setName((c.getString(c.getColumnIndex(KEY_USER_NAME))));
+                _user.setEmail((c.getString(c.getColumnIndex(KEY_USER_EMAIL))));
+                _user.setBalance((c.getInt(c.getColumnIndex(KEY_USER_BALANCE))));
+                _user.setSerializedGroupId((c.getString(c.getColumnIndex(KEY_USER_GROUP_IDS))));
+                _user.setCreationDate(c.getInt(c.getColumnIndex(KEY_CREATED_AT)));
+
+                users.add(_user);
+
+            } while (c.moveToNext());
+        }
+
+        return users;
+    }
+
+    public int updateUser(DbUser _user){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, _user.getId());
+        values.put(KEY_USER_NAME, _user.getName());
+        values.put(KEY_USER_EMAIL, _user.getEmail());
+        values.put(KEY_USER_BALANCE, _user.getBalance());
+        values.put(KEY_USER_GROUP_IDS, _user.getSerializedGroupId());
+        values.put(KEY_CREATED_AT, _user.getCreationDate());
+
+        int user_id = db.update(TABLE_USERS, values, KEY_ID + "=" + _user.getId(),null);
+
+        return user_id;
+    }
+
+
 }
-
-
 

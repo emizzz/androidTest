@@ -10,11 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class ListaSpesa extends Fragment{
 
@@ -32,9 +27,9 @@ public class ListaSpesa extends Fragment{
         liste.mLayoutManagerList = new LinearLayoutManager(getContext());
         liste.groupsListViewList.setLayoutManager(liste.mLayoutManagerList);
 
-        //groupsListAdapter = new List(groupsNames);
+        //groupsListAdapter = new CustomList(groupsNames);
 
-        liste.groupsListAdapterList = new List(getContext(),liste.listList );
+        liste.groupsListAdapterList = new CustomList(getContext(),liste.listList );
         liste.groupsListViewList.setAdapter( liste.groupsListAdapterList);
 
         fab = (FloatingActionButton) v.findViewById(R.id.addtospesa);
@@ -51,7 +46,7 @@ public class ListaSpesa extends Fragment{
         return v;
     }
     public void prova (){
-        liste.groupsListAdapterList = new List(getContext(), liste.listList);
+        liste.groupsListAdapterList = new CustomList(getContext(), liste.listList);
 
         liste.groupsListViewList.setAdapter( liste.groupsListAdapterList);
     }

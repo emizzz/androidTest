@@ -23,7 +23,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 
-public class List extends RecyclerView.Adapter {
+public class CustomList extends RecyclerView.Adapter {
     private JSONArray data;
     private Context mContext;
     private int size;
@@ -42,7 +42,7 @@ public class List extends RecyclerView.Adapter {
 
         public GroupListViewHolder(View v) {
             super(v);
-            mView = v;
+            /*mView = v;
             title = (TextView) mView.findViewById(R.id.group_item_name);
 
 
@@ -63,7 +63,7 @@ public class List extends RecyclerView.Adapter {
                     ((Activity) v.getContext()).startActivityForResult(intent, REQUEST_CODE_GROUP);
                 }
             });
-            delbtn = (ImageButton) mView.findViewById(R.id.group_item_icon1);
+            delbtn = (ImageButton) mView.findViewById(R.id.group_item_icon1);*/
         }
     }
 
@@ -138,7 +138,7 @@ public class List extends RecyclerView.Adapter {
 
 
     // Adapter Constructor
-    public List(Context context, JSONArray _data) {
+    public CustomList(Context context, JSONArray _data) {
 
         this.data = _data;
         this.mContext = context;

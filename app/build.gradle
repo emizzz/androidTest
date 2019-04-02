@@ -31,4 +31,7 @@ dependencies {
 
     //to make rounded images
     implementation 'de.hdodenhof:circleimageview:3.0.0'
+
+    //search dialog
+    implementation 'com.github.mirrajabi:search-dialog:1.2.3'
 }

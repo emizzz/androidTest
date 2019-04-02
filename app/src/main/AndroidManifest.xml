@@ -11,7 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".recapItem"></activity>
+        <activity
+            android:name=".AddGroupItem"
+            android:label="@string/title_activity_add_group_item"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".recapItem" />
         <activity android:name=".addToSpesa" />
         <activity android:name=".addItem" />
         <activity android:name=".liste" />

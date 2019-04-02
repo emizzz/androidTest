@@ -10,157 +10,102 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
-import android.database.Cursor;
 import android.util.Log;
+
 
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private DbAdapter dbHelper;
-    private Cursor cursor;
-    private RecyclerView groupsListView;
-    private RecyclerView.Adapter groupsListAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private DatabaseHelper db;
+    private adapterGroupList adapter;
 
 
-    private static final int REQUEST_CODE_LISTA = 10;
+    /*private static final int REQUEST_CODE_LISTA = 10;
     private static final int REQUEST_CODE_DISPENSA = 20;
-    private static final int REQUEST_CODE_GROUP = 30;
-
-
-
-    //private String[] groupsNames = new String[] {"Famiglia", "Conquilini"};
-
-
-    private JSONArray groupsList = new JSONArray();
+    private static final int REQUEST_CODE_GROUP = 30;*/
 
     private FloatingActionButton fab;
     Toolbar toolbar;
+    ListView listView;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        listView = (ListView) findViewById(R.id.group_list);
 
-        groupsListView = (RecyclerView) findViewById(R.id.groups_list);
-        mLayoutManager = new LinearLayoutManager(this);
-        groupsListView.setLayoutManager(mLayoutManager);
-        groupsListView.setItemAnimator(new DefaultItemAnimator());
-        //groupsListView.setHasFixedSize(true);
+        db = new DatabaseHelper(getApplicationContext());
 
 
-        //populate list data
-        //  dbHandler.addHandler("group_list", "Famiglia");
+        /*****************************TEST******************************/
+        //create a group
+        //DbGroup group = new DbGroup("group 1");
+        //long new_group_id = db.createGroup(group);
+        //DbGroup group2 = new DbGroup("group 2");
+        //long new_group_id2 = db.createGroup(group2);
 
-        /*TESTTTTTTTTTT*/
-
-        dbHelper = new DbAdapter(this);
-        dbHelper.open();
-        dbHelper.createGroup("example1");
-        cursor = dbHelper.fetchAll();
-
-
-        startManagingCursor(cursor);
-        while ( cursor.moveToNext() ) {
-            String contactID = cursor.getString( cursor.getColumnIndex(DbAdapter.KEY_NAME) );
-            Log.d("error: ", "contact id = " + contactID);
-        }
-        cursor.close();
-        dbHelper.close();
-        /*END TESTTTTTTTTTT*/
-
-        // ----------------- GROUP LIST -----------------
-        JSONObject item1 = new JSONObject();
-        JSONObject item2 = new JSONObject();
-        JSONObject item3 = new JSONObject();
-        try{
-            item1.put("type", "group_list");
-            item1.put("title", "Famiglia");
-            item2.put("type", "group_list");
-            item2.put("title", "Coinquilini");
-            item3.put("type", "group_list");
-            item3.put("title", "Amici");
-
-            groupsList.put(item1);
-            groupsList.put(item2);
-            groupsList.put(item3);
+        //create a user
+        /*
+        ArrayList<Integer> group_ids = new ArrayList<>();
+        DbUser newUser = new DbUser("Marco", "marchi@lauri.it", 0, group_ids);
+        long new_user_id = db.createUser(newUser);
+        DbUser newUser1 = new DbUser("Lucia", "lucia@lauri.it", 0, group_ids);
+        long new_user_id1 = db.createUser(newUser1);
+        */
+        /*****************************TEST******************************/
 
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        /*---------------------------------FETCH GROUPS---------------------------------*/
+        //read database and get all the groups
+        db = new DatabaseHelper(getApplicationContext());
+        ArrayList<DbGroup> groups = new ArrayList<>();
+        List<DbGroup> db_groups = db.getGroups();
 
-/*
-
-
-        //-----------------  USER LIST -----------------
-        JSONObject item11 = new JSONObject();
-        try{
-            item11.put("type", "user_list");
-            item11.put("title", "Gianni");
-            item11.put("description", "gianni@gianni.it");
-            item11.put("photo_path", "photo_path");
-            item11.put("counter", "15");
-
-            groupsList.put(item11);
-
-        } catch (JSONException e) {
-            //log something
-        }
+        //insert groups in the adapter "adapterGroupList"
+        adapter = new adapterGroupList(this, db_groups);
+        listView.setAdapter(adapter);
 
 
-        //----------------- PRODUCT LIST -----------------
-        JSONObject item111 = new JSONObject();
-        JSONObject item222 = new JSONObject();
-        try{
-            item111.put("type", "product_list");
-            item111.put("title", "Latte");
-            item111.put("description", "parzialmente scremato");
-            item111.put("product_type", "list");      // "list" or "pantry"
-            item222.put("type", "product_list");
-            item222.put("title", "Latte");
-            item222.put("description", "parzialmente scremato");
-            item222.put("product_type", "list");      // "list" or "pantry"
-            groupsList.put(item111);
-            groupsList.put(item222);
-
-        } catch (JSONException e) {
-            //log something
-        }
-*/
-
-        /*create recycler view*/
-
-        //groupsListAdapter = new List(groupsNames);
-        groupsListAdapter = new List(this, groupsList);
-
-        groupsListView.setAdapter(groupsListAdapter);
+        /*---------------------------------MODIFY GROUP---------------------------------*/
+        /*
+        ImageButton modify_group = (ImageButton)findViewById(R.id.group_item_icon1);
+        modify_group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("ImageButton", "Clicked!");
+            }
+        });
+        */
 
 
-
-
+        /*---------------------------------CREATE GROUP---------------------------------*/
+        //FAB button
         fab = (FloatingActionButton) findViewById(R.id.addgroup);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                 Intent intent = new Intent(getApplicationContext(),group.class);
-                startActivityForResult(intent,REQUEST_CODE_GROUP);
+                Intent intent = new Intent(getApplicationContext(),AddGroupItem.class);
+                startActivity(intent);
+                //startActivityForResult(intent,REQUEST_CODE_GROUP);
 
             }
         });
@@ -174,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
         if(resultCode!= Activity.RESULT_OK){
             return;
         }
+        /*
         if (requestCode==REQUEST_CODE_LISTA) {
             Bundle extras= data.getExtras();
             if (extras != null) {
@@ -195,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                     //log something
                 }
 
-                groupsListAdapter = new List(this, groupsList);
+                groupsListAdapter = new CustomList(this, groupsList);
 
                 groupsListView.setAdapter(groupsListAdapter);
 
@@ -225,12 +171,13 @@ public class MainActivity extends AppCompatActivity {
                     //log something
                 }
 
-                groupsListAdapter = new List(this, groupsList);
+                groupsListAdapter = new CustomList(this, groupsList);
 
                 groupsListView.setAdapter(groupsListAdapter);
                 // and get whatever data you are adding
             }
         }
+
         if (requestCode==REQUEST_CODE_GROUP) {
             Bundle extras= data.getExtras();
             if (extras != null) {
@@ -273,19 +220,20 @@ public class MainActivity extends AppCompatActivity {
                 }
 
            //     dbHandler.addHandler("group_list",newname);
-                groupsListAdapter = new List(this, groupsList);
+                groupsListAdapter = new CustomList(this, groupsList);
 
                 groupsListView.setAdapter(groupsListAdapter);
 
             }
 
-        }
+        }*/
 
 
     }
-    public void prova (){
-        groupsListAdapter = new List(this, groupsList);
 
-        groupsListView.setAdapter(groupsListAdapter);
+    public void prova (){
+        //groupsListAdapter = new CustomList(this, groupsList);
+
+        //groupsListView.setAdapter(groupsListAdapter);
     }
 }
