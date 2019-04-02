@@ -2,6 +2,7 @@ package com.example.cereal_shopper;
 
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -20,12 +21,13 @@ import java.util.List;
 
 
 public class adapterGroupList extends ArrayAdapter<DbGroup> {
-
+    private DatabaseHelper db;
     private Context mContext;
     private List<DbGroup> groupList = new ArrayList<>();
 
     public adapterGroupList(@NonNull Context context, @LayoutRes List<DbGroup> list) {
         super(context, 0 , list);
+        db = new DatabaseHelper(context);
         mContext = context;
         groupList = list;
     }
@@ -34,7 +36,7 @@ public class adapterGroupList extends ArrayAdapter<DbGroup> {
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItem = convertView;
-        if(listItem == null)
+         if(listItem == null)
             listItem = LayoutInflater.from(mContext).inflate(R.layout.layout_group_list_item, parent,false);
 
         DbGroup currentGroup = groupList.get(position);
@@ -57,7 +59,30 @@ public class adapterGroupList extends ArrayAdapter<DbGroup> {
                 v.getContext().startActivity(intent);
             }
         });
+
+        //--------------------------------------------delete from group------------------------------------------------
+        ImageButton delete_from_group = (ImageButton) listItem.findViewById(R.id.group_item_icon1);
+
+        delete_from_group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Global globalApp = (Global)v.getContext().getApplicationContext();
+
+                //remove the group id from the current logged user
+                DbUser currentUser = globalApp.getCurrentUser();
+                Log.d("------", Integer.toString(currentUser.getId()));
+
+
+
+                /*Intent intent=new Intent(getContext(), AddGroupItem.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("GROUP_ID", groupList.get(position).getId());
+                v.getContext().startActivity(intent);*/
+            }
+        });
+
         return listItem;
+
+
     }
 
 }

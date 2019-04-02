@@ -30,6 +30,7 @@ public class DbUser {
         this.serialized_group_ids = listToString(_group_ids);
 
     }
+
     // setters
     public void setId(int _id) {
         this.id = _id;

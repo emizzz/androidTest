@@ -42,6 +42,7 @@ public class AddGroupItem extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = new DatabaseHelper(getApplicationContext());
+        Global globalApp = (Global)getApplicationContext();
         setContentView(R.layout.activity_add_group_item);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -76,10 +77,6 @@ public class AddGroupItem extends AppCompatActivity {
 
         }
 
-
-
-
-
         //get all the users
         List<DbUser> db_users = db.getUsers();
 
@@ -93,8 +90,8 @@ public class AddGroupItem extends AppCompatActivity {
                     to_add_users.add(_user);
                 }
             }
-
         }
+
 
         //link the selected users to the template's list
         // Create an ArrayAdapter from List
@@ -152,6 +149,7 @@ public class AddGroupItem extends AppCompatActivity {
 
                         }
 
+
                         //update the user's group_ids
                         for(DbUser _added_user : to_add_users){
                             ArrayList<Integer> userGroupIds = _added_user.getGroupIds();
@@ -160,7 +158,9 @@ public class AddGroupItem extends AppCompatActivity {
                                 _added_user.setGroupId( userGroupIds );
                                 db.updateUser(_added_user);
                             }
+
                         }
+
 
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     }

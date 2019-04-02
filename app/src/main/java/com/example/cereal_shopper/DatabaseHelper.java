@@ -4,9 +4,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.security.AccessController.getContext;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -14,7 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String LOG = "DatabaseHelper";
 
     // Database Version
-    private static final int DATABASE_VERSION = 11;
+    private static final int DATABASE_VERSION = 15;
 
     // Database Name
     private static final String DATABASE_NAME = "cerealShopper";
@@ -117,6 +120,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /*
+    * This method should be called only the first time the app runs
+    * It creates a fake logged user, 2 groups and some other users
+    * */
+    public DbUser firstStart(){
+
+        //create a fake logged in user (id == 1)
+        ArrayList<Integer> group_ids = new ArrayList<>();
+        group_ids.add(1);
+        group_ids.add(2);
+        DbUser currentUser = new DbUser("Matteo", "matteo@mattei.it", 0, group_ids);
+        this.createUser(currentUser);
+
+
+        //create 2 groups
+        DbGroup group = new DbGroup("group 1");
+        long new_group_id = this.createGroup(group);
+        DbGroup group2 = new DbGroup("group 2");
+        long new_group_id2 = this.createGroup(group2);
+
+        //create 2 users
+        ArrayList<Integer> group_ids1 = new ArrayList<>();
+        group_ids1.add(1);
+        DbUser newUser1 = new DbUser("Marco", "marchi@lauri.it", 0, group_ids1);
+        this.createUser(newUser1);
+
+        ArrayList<Integer> group_ids2 = new ArrayList<>();
+        group_ids2.add(2);
+        DbUser newUser2 = new DbUser("Lucia", "lucia@lauri.it", 0, group_ids2);
+        this.createUser(newUser2);
+
+
+        return currentUser;
+    }
+
     //---------------------------------------------GROUPS METHODS---------------------------------------------
 
     /*
@@ -182,6 +220,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return groups;
     }
 
+
     //---------------------------------------------USERS METHODS---------------------------------------------
 
     /*
@@ -228,6 +267,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return users;
     }
 
+    public DbUser getUser(int _id){
+        DbUser new_user_copy = new DbUser();
+        String selectQuery = "SELECT  * FROM " + TABLE_USERS + " WHERE " + KEY_ID +  " = " + _id;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if( cursor != null && cursor.moveToFirst() ){
+            new_user_copy.setId( cursor.getInt( cursor.getColumnIndex(KEY_ID)) );
+            new_user_copy.setName( cursor.getString( cursor.getColumnIndex(KEY_USER_NAME)) );
+            new_user_copy.setEmail( cursor.getString( cursor.getColumnIndex(KEY_USER_EMAIL)) );
+            new_user_copy.setBalance( cursor.getInt( cursor.getColumnIndex(KEY_USER_BALANCE)) );
+            new_user_copy.setSerializedGroupId( cursor.getString( cursor.getColumnIndex(KEY_USER_GROUP_IDS)) );
+            new_user_copy.setCreationDate( cursor.getLong( cursor.getColumnIndex(KEY_CREATED_AT)) );
+        }
+
+        return new_user_copy;
+    }
+
     public int updateUser(DbUser _user){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -242,6 +299,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int user_id = db.update(TABLE_USERS, values, KEY_ID + "=" + _user.getId(),null);
 
         return user_id;
+    }
+
+    public List<DbGroup> getUserGroups(int _id){
+        List<DbGroup> groups = new ArrayList<DbGroup>();
+        DbUser userUtility = new DbUser();
+        String selectQuery = "SELECT  * FROM " + TABLE_USERS + " WHERE " + KEY_ID +  " = " + _id;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if( cursor != null && cursor.moveToFirst() ){
+            userUtility.setSerializedGroupId( cursor.getString(cursor.getColumnIndex(KEY_USER_GROUP_IDS)) );
+            ArrayList<Integer> listOfUserGroupIds = userUtility.getGroupIds();
+
+            for( int group_id : listOfUserGroupIds ){
+                groups.add( this.getGroup(group_id) );
+            }
+        }
+        return groups;
     }
 
 

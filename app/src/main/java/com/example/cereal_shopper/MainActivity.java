@@ -56,29 +56,12 @@ public class MainActivity extends AppCompatActivity {
         db = new DatabaseHelper(getApplicationContext());
 
 
-        /*****************************TEST******************************/
-        //create a group
-        //DbGroup group = new DbGroup("group 1");
-        //long new_group_id = db.createGroup(group);
-        //DbGroup group2 = new DbGroup("group 2");
-        //long new_group_id2 = db.createGroup(group2);
-
-        //create a user
-        /*
-        ArrayList<Integer> group_ids = new ArrayList<>();
-        DbUser newUser = new DbUser("Marco", "marchi@lauri.it", 0, group_ids);
-        long new_user_id = db.createUser(newUser);
-        DbUser newUser1 = new DbUser("Lucia", "lucia@lauri.it", 0, group_ids);
-        long new_user_id1 = db.createUser(newUser1);
-        */
-        /*****************************TEST******************************/
-
-
         /*---------------------------------FETCH GROUPS---------------------------------*/
-        //read database and get all the groups
+        //read database and get all the user's groups
+        Global globalApp = (Global)getApplicationContext();
         db = new DatabaseHelper(getApplicationContext());
         ArrayList<DbGroup> groups = new ArrayList<>();
-        List<DbGroup> db_groups = db.getGroups();
+        List<DbGroup> db_groups = db.getUserGroups(globalApp.getCurrentUser().getId());
 
         //insert groups in the adapter "adapterGroupList"
         adapter = new adapterGroupList(this, db_groups);

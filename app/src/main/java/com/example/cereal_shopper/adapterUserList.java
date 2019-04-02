@@ -70,6 +70,7 @@ public class adapterUserList extends ArrayAdapter<DbUser> {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
+                                //if user != currentUser => delete item
                                 //selectedElement = userList.get(_position).getId();
 
                             }
