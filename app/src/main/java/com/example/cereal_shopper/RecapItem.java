@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class recapItem extends AppCompatActivity {
+public class RecapItem extends AppCompatActivity {
 
     TextView tvName;
     TextView tvCategory;

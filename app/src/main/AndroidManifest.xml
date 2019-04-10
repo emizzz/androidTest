@@ -4,8 +4,8 @@
     package="com.example.cereal_shopper">
 
     <application
+        android:name=".Global"
         android:allowBackup="true"
-        android:name="com.example.cereal_shopper.Global"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -13,14 +13,13 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".Lists"></activity>
+        <activity
             android:name=".AddGroupItem"
             android:label="@string/title_activity_add_group_item"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".recapItem" />
-        <activity android:name=".addToSpesa" />
-        <activity android:name=".addItem" />
-        <activity android:name=".liste" />
-        <activity android:name=".group" />
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".RecapItem" />
+        <activity android:name=".AddToShoppingList" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

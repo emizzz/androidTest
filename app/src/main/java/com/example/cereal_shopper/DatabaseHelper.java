@@ -17,7 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String LOG = "DatabaseHelper";
 
     // Database Version
-    private static final int DATABASE_VERSION = 17;
+    private static final int DATABASE_VERSION = 20;
 
     // Database Name
     private static final String DATABASE_NAME = "cerealShopper";
@@ -42,7 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_USER_GROUP_IDS = "group_id";
 
     // PRODUCTS Table - column names
-    private static final String KEY_PRODUCT_TYPE = "type";
+    private static final String KEY_PRODUCT_TYPE = "product_type";
     private static final String KEY_PRODUCT_GROUP_ID = "group_id";
     private static final String KEY_PRODUCT_LIKED = "liked";
     private static final String KEY_PRODUCT_NAME = "name";
@@ -81,8 +81,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + KEY_PRODUCT_NAME + " TEXT,"
             + KEY_PRODUCT_CATEGORY_ID + " INTEGER,"
             + KEY_PRODUCT_QUANTITY + " INTEGER,"
-            + KEY_PRODUCT_WEIGHT + " INTEGER,"
-            + KEY_PRODUCT_PRICE + " INTEGER,"
+            + KEY_PRODUCT_WEIGHT + " REAL,"
+            + KEY_PRODUCT_PRICE + " REAL,"
             + KEY_PRODUCT_EXPIRY + " INTEGER,"
             + KEY_PRODUCT_NOTES + " TEXT,"
             + KEY_CREATED_AT + " INTEGER" + ")";
@@ -122,7 +122,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /*
     * This method should be called only the first time the app runs
-    * It creates a fake logged user, 2 groups and some other users
+    * It creates:
+     *  -a fake logged user
+     *  -2 groups
+     *  -some other users
+     *  -some products
     * */
     public DbUser firstStart(){
 
@@ -151,6 +155,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         DbUser newUser2 = new DbUser("Lucia", "lucia@lauri.it", 0, group_ids2);
         this.createUser(newUser2);
 
+        //create products
+        DbProduct product1 = new DbProduct("pantry", 1, 1, "Latte", 5, 2, 1000.43, 2.73, 1567517309, "");
+        DbProduct product2 = new DbProduct("pantry", 1, 1, "Pasta", 4, 2, 2000, 3.99, 1567517309, "");
+        DbProduct product3 = new DbProduct("shopping_list", 1, 0, "Pan bauletto", 4, 1, -1, -1, -1, "");
+        DbProduct product4 = new DbProduct("shopping_list", 1, 0, "Formaggio grana", 5, 1, -1, -1, -1, "");
+        this.createProduct(product1);
+        this.createProduct(product2);
+        this.createProduct(product3);
+        this.createProduct(product4);
+
+        //create categories
+        this.createCategory(new DbCategory("Cereali, pane, pasta e patate"));
+        this.createCategory(new DbCategory("Frutta e verdura"));
+        this.createCategory(new DbCategory("Latte, yogurt e formaggi"));
+        this.createCategory(new DbCategory("Carne, pesce uova e legumi"));
+        this.createCategory(new DbCategory("Grassi e oli da condimento"));
 
         return currentUser;
     }
@@ -317,6 +337,156 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
         return groups;
+    }
+
+
+
+    //---------------------------------------------PRODUCTS METHODS---------------------------------------------
+    public long createProduct(DbProduct _product) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_PRODUCT_TYPE, _product.getType());
+        values.put(KEY_PRODUCT_GROUP_ID, _product.getGroupId());
+        values.put(KEY_PRODUCT_LIKED, _product.getLiked());
+        values.put(KEY_PRODUCT_NAME, _product.getName());
+        values.put(KEY_PRODUCT_CATEGORY_ID, _product.getCategoryId());
+        values.put(KEY_PRODUCT_QUANTITY, _product.getQuantity());
+        values.put(KEY_PRODUCT_WEIGHT, _product.getWeight());
+        values.put(KEY_PRODUCT_PRICE, _product.getPrice());
+        values.put(KEY_PRODUCT_EXPIRY, _product.getExpiry());
+        values.put(KEY_PRODUCT_NOTES, _product.getNotes());
+        values.put(KEY_CREATED_AT, _product.getCreationDate());
+
+        long product_id = db.insert(TABLE_PRODUCTS, null, values);
+        return product_id;
+    }
+
+    public DbProduct getProduct(int _id){
+        DbProduct new_product_copy = new DbProduct();
+        String selectQuery = "SELECT  * FROM " + TABLE_PRODUCTS + " WHERE " + KEY_ID +  " = " + _id;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if( c != null && c.moveToFirst() ){
+            new_product_copy.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+            new_product_copy.setType(c.getString((c.getColumnIndex(KEY_PRODUCT_TYPE))));
+            new_product_copy.setGroupId(c.getInt((c.getColumnIndex(KEY_PRODUCT_GROUP_ID))));
+            new_product_copy.setLiked(c.getInt((c.getColumnIndex(KEY_PRODUCT_LIKED))));
+            new_product_copy.setName(c.getString((c.getColumnIndex(KEY_PRODUCT_NAME))));
+            new_product_copy.setCategoryId(c.getInt((c.getColumnIndex(KEY_PRODUCT_CATEGORY_ID))));
+            new_product_copy.setQuantity(c.getInt((c.getColumnIndex(KEY_PRODUCT_QUANTITY))));
+            new_product_copy.setWeight(c.getInt((c.getColumnIndex(KEY_PRODUCT_WEIGHT))));
+            new_product_copy.setPrice(c.getInt((c.getColumnIndex(KEY_PRODUCT_PRICE))));
+            new_product_copy.setExpiry(c.getInt((c.getColumnIndex(KEY_PRODUCT_EXPIRY))));
+            new_product_copy.setNotes(c.getString((c.getColumnIndex(KEY_PRODUCT_NOTES))));
+            new_product_copy.setCreationDate(c.getInt((c.getColumnIndex(KEY_CREATED_AT))));
+        }
+
+        return new_product_copy;
+    }
+
+    public ArrayList<DbProduct> getProducts(int _group_id, String _type) {
+        ArrayList<DbProduct> products = new ArrayList<DbProduct>();
+
+        if(_type == "shopping_list" || _type == "pantry"){
+
+            String selectQuery = "SELECT * FROM " + TABLE_PRODUCTS + " WHERE " +  KEY_PRODUCT_GROUP_ID + " = '" + _group_id + "' AND " + KEY_PRODUCT_TYPE + " = '" + _type + "' ORDER BY " + KEY_USER_NAME +  " ASC";
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor c = db.rawQuery(selectQuery, null);
+
+            if (c.moveToFirst()) {
+                do {
+                    DbProduct _product = new DbProduct();
+                    _product.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+                    _product.setType(c.getString((c.getColumnIndex(KEY_PRODUCT_TYPE))));
+                    _product.setGroupId(c.getInt((c.getColumnIndex(KEY_PRODUCT_GROUP_ID))));
+                    _product.setLiked(c.getInt((c.getColumnIndex(KEY_PRODUCT_LIKED))));
+                    _product.setName(c.getString((c.getColumnIndex(KEY_PRODUCT_NAME))));
+                    _product.setCategoryId(c.getInt((c.getColumnIndex(KEY_PRODUCT_CATEGORY_ID))));
+                    _product.setQuantity(c.getInt((c.getColumnIndex(KEY_PRODUCT_QUANTITY))));
+                    _product.setWeight(c.getInt((c.getColumnIndex(KEY_PRODUCT_WEIGHT))));
+                    _product.setPrice(c.getInt((c.getColumnIndex(KEY_PRODUCT_PRICE))));
+                    _product.setExpiry(c.getInt((c.getColumnIndex(KEY_PRODUCT_EXPIRY))));
+                    _product.setNotes(c.getString((c.getColumnIndex(KEY_PRODUCT_NOTES))));
+                    _product.setCreationDate(c.getInt((c.getColumnIndex(KEY_CREATED_AT))));
+
+                    products.add(_product);
+
+                } while (c.moveToNext());
+            }
+        }
+        else{
+            Log.d("DatabaseHelper", "getProducts: wrong product type");
+        }
+
+        return products;
+    }
+
+    /*
+    * the favorites logic is not implemented, is only a fake functionality
+    * */
+    public List<DbProduct> getFavoritesProducts(int _groupId){
+        List<DbProduct> products = new ArrayList<DbProduct>();
+        String selectQuery = "SELECT  * FROM " + TABLE_PRODUCTS + " WHERE " + KEY_PRODUCT_GROUP_ID +  " = " + _groupId + " AND " + KEY_PRODUCT_LIKED + " = " + 1;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()) {
+            do {
+                DbProduct _product = new DbProduct();
+                _product.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+                _product.setType(c.getString((c.getColumnIndex(KEY_PRODUCT_TYPE))));
+                _product.setGroupId(c.getInt((c.getColumnIndex(KEY_PRODUCT_GROUP_ID))));
+                _product.setLiked(c.getInt((c.getColumnIndex(KEY_PRODUCT_LIKED))));
+                _product.setName(c.getString((c.getColumnIndex(KEY_PRODUCT_NAME))));
+                _product.setCategoryId(c.getInt((c.getColumnIndex(KEY_PRODUCT_CATEGORY_ID))));
+                _product.setQuantity(c.getInt((c.getColumnIndex(KEY_PRODUCT_QUANTITY))));
+                _product.setWeight(c.getInt((c.getColumnIndex(KEY_PRODUCT_WEIGHT))));
+                _product.setPrice(c.getInt((c.getColumnIndex(KEY_PRODUCT_PRICE))));
+                _product.setExpiry(c.getInt((c.getColumnIndex(KEY_PRODUCT_EXPIRY))));
+                _product.setNotes(c.getString((c.getColumnIndex(KEY_PRODUCT_NOTES))));
+                _product.setCreationDate(c.getInt((c.getColumnIndex(KEY_CREATED_AT))));
+
+                products.add(_product);
+
+            } while (c.moveToNext());
+        }
+        return products;
+    }
+
+    //---------------------------------------------CATEGORIES METHODS---------------------------------------------
+
+    public long createCategory(DbCategory _category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_CATEGORIES_NAME, _category.getName());
+        values.put(KEY_CREATED_AT, _category.getCreationDate());
+
+        long category_id = db.insert(TABLE_CATEGORIES, null, values);
+        return category_id;
+    }
+
+    public List<DbCategory> getCategories() {
+        List<DbCategory> categories = new ArrayList<DbCategory>();
+        String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " ORDER BY " + KEY_CATEGORIES_NAME +  " ASC";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()) {
+            do {
+                DbCategory _category = new DbCategory();
+                _category.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+                _category.setName((c.getString(c.getColumnIndex(KEY_CATEGORIES_NAME))));
+                _category.setCreationDate(c.getInt(c.getColumnIndex(KEY_CREATED_AT)));
+                categories.add(_category);
+
+            } while (c.moveToNext());
+        }
+
+        return categories;
     }
 
 

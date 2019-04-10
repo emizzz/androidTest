@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/lin"
+        android:layout_marginTop="@dimen/margin_padding_size_medium"
         android:layout_width="fill_parent"
         android:orientation="vertical"
         android:layout_height="match_parent">

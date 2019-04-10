@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Aggiungi Prodotto"
-            android:textSize="18pt"
+            android:textSize="20sp"
             android:layout_weight="2"
             android:layout_marginStart="@dimen/margin_padding_size_medium"
             android:layout_marginEnd="@dimen/margin_padding_size_medium"
@@ -45,7 +45,7 @@
         </TextView>
 
         <EditText
-            android:id="@+id/EditTextName"
+            android:id="@+id/add_list_product_name"
             android:layout_height="wrap_content"
             android:hint="Prodotto"
             android:inputType="textPersonName"
@@ -59,20 +59,14 @@
             android:layout_weight="2">
         </EditText>
 
-        <EditText
-            android:id="@+id/EditTextCategory"
-            android:layout_height="wrap_content"
-            android:hint="Categoria"
-            android:inputType="textPersonName"
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/list_categories"
             android:layout_width="match_parent"
-            android:textSize="@dimen/text_size_medium"
+            android:layout_height="40dp"
             android:layout_marginStart="@dimen/margin_padding_size_medium"
             android:layout_marginEnd="@dimen/margin_padding_size_medium"
             android:layout_marginRight="@dimen/margin_padding_size_medium"
-            android:layout_marginBottom="@dimen/margin_padding_size_medium"
-
-            android:layout_weight="2">
-        </EditText>
+            android:layout_marginBottom="@dimen/margin_padding_size_medium"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -102,12 +96,11 @@
 
         </LinearLayout>
 
-
         <EditText
-            android:id="@+id/EditNotes"
-            android:layout_height="wrap_content"
+            android:id="@+id/add_list_product_notes"
+            android:inputType="text|textMultiLine"
+            android:layout_height="150dp"
             android:hint="Note"
-            android:inputType="textPersonName"
             android:layout_width="match_parent"
             android:textSize="@dimen/text_size_medium"
             android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -121,7 +114,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/addItemButton"
+            android:id="@+id/add_list_button"
             android:text="Aggiungi"
             android:layout_marginStart="@dimen/margin_padding_size_medium"
             android:layout_marginEnd="@dimen/margin_padding_size_medium"
@@ -134,13 +127,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Preferiti"
-            android:textSize="18pt"
+            android:textSize="20sp"
             android:layout_weight="2"
             android:layout_marginStart="@dimen/margin_padding_size_medium"
             android:layout_marginEnd="@dimen/margin_padding_size_medium"
             android:layout_marginRight="@dimen/margin_padding_size_medium"
             android:layout_marginBottom="@dimen/margin_padding_size_medium">
         </TextView>
+
+        <ListView
+            android:id="@+id/add_list_product_favorites"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/group_members"
+            android:scrollbars="vertical"
+            android:paddingBottom="60dp">
+
+        </ListView>
     </LinearLayout>
 
 

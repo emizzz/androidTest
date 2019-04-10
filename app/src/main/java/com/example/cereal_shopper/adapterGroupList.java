@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,15 +44,25 @@ public class adapterGroupList extends ArrayAdapter<DbGroup> {
         name.setText(currentGroup.getTitle() + " " + currentGroup.getId());
 
 
+        //--------------------------------------------select group------------------------------------------------
+        LinearLayout select_group = (LinearLayout) listItem.findViewById(R.id.group_list_item);
+
+        select_group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), Lists.class);
+                intent.putExtra("GROUP_ID", currentGroup.getId());
+                v.getContext().startActivity(intent);
+            }
+        });
+
+
         //--------------------------------------------modify group------------------------------------------------
         ImageButton modify_group = (ImageButton) listItem.findViewById(R.id.group_item_icon2);
 
         modify_group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(getApplicationContext(),group.class);
-                //startActivity(new Intent(getApplicationContext(), AddGroupItem.class));
-
                 Intent intent=new Intent(getContext(), AddGroupItem.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("GROUP_ID", groupList.get(position).getId());
                 v.getContext().startActivity(intent);

@@ -7,6 +7,7 @@ public class Global extends Application {
     DatabaseHelper db;
     int currentUserId = 1;      //fake user is the first user created in the db
     DbUser currentUser;
+    int currentGroupId;
 
     public void onCreate() {
         super.onCreate();
@@ -27,5 +28,9 @@ public class Global extends Application {
     public DbUser getCurrentUser(){
         return currentUser;
     }
+    public int getCurrentGroupId(){return currentGroupId; }
 
+    public void setCurrentGroupId(int _groupId){
+        this.currentGroupId = _groupId;
+    }
 }

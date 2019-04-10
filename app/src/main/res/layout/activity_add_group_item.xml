@@ -58,7 +58,6 @@
             android:layout_below="@+id/group_members"
             android:scrollbars="vertical"
             android:paddingBottom="60dp">
-
         </ListView>
 
         <android.support.design.widget.FloatingActionButton
