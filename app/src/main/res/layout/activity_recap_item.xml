@@ -24,247 +24,212 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                android:orientation="horizontal">
-
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_padding_size_medium">
                 <TextView
-                    android:id="@+id/recName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="5"
-                    android:text="Nome"
-                    android:textSize="25sp" />
-
-                <EditText
-                    android:id="@+id/receditName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_width="0dp"
                     android:layout_weight="1"
-
-                    />
-
+                    android:layout_height="wrap_content"
+                    android:text="Prodotto"
+                    android:layout_gravity="left"
+                    android:textSize="25sp"/>
+                <TextView
+                    android:id="@+id/recap_name"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:textSize="25sp"/>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                android:orientation="horizontal">
-
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_padding_size_medium">
                 <TextView
-                    android:id="@+id/recCategory"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="3"
                     android:text="Categoria"
-                    android:textSize="25sp"
-
-                    />
-
-                <EditText
-                    android:id="@+id/receditCategory"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_gravity="left"
+                    android:textSize="25sp"/>
+                <TextView
+                    android:id="@+id/recap_category"
+                    android:layout_width="0dp"
                     android:layout_weight="1"
-
-                    />
-
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:textSize="25sp"/>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                android:orientation="horizontal">
-
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_padding_size_medium">
                 <TextView
-                    android:id="@+id/recQuantity"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="3"
                     android:text="Quantità"
-                    android:textSize="25sp"
-
-                    />
-
-                <EditText
-                    android:id="@+id/receditQuantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_gravity="left"
+                    android:textSize="25sp"/>
+                <TextView
+                    android:id="@+id/recap_quantity"
+                    android:layout_width="0dp"
                     android:layout_weight="1"
-
-                    />
-
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:textSize="25sp"/>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:id="@+id/layrecwheight"
-
-                >
-
+                android:padding="@dimen/margin_padding_size_medium">
                 <TextView
-                    android:id="@+id/recwheight"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="3"
                     android:text="Peso"
-                    android:textSize="25sp"
-
-                    />
-
-                <EditText
-                    android:id="@+id/receditweight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_gravity="left"
+                    android:textSize="25sp"/>
+                <TextView
+                    android:id="@+id/recap_weight"
+                    android:layout_width="0dp"
                     android:layout_weight="1"
-
-                    />
-
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:textSize="25sp"/>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:id="@+id/layrecPrice"
-                >
-
+                android:padding="@dimen/margin_padding_size_medium">
                 <TextView
-                    android:id="@+id/recPrice"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="3"
                     android:text="Prezzo"
-                    android:textSize="25sp"
-
-                    />
-
-                <EditText
-                    android:id="@+id/receditprice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_gravity="left"
+                    android:textSize="25sp"/>
+                <TextView
+                    android:id="@+id/recap_price"
+                    android:layout_width="0dp"
                     android:layout_weight="1"
-
-                    />
-
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:textSize="25sp"/>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:id="@+id/layrecExpiration"
-
-                >
-
+                android:padding="@dimen/margin_padding_size_medium">
                 <TextView
-                    android:id="@+id/recExpiration"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="3"
-                    android:text="Scadenza"
-                    android:textSize="25sp"
-
-                    />
-
-                <EditText
-                    android:id="@+id/receditExpiration"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_width="0dp"
                     android:layout_weight="1"
-
-                    />
-
+                    android:layout_height="wrap_content"
+                    android:text="Scadenza"
+                    android:layout_gravity="left"
+                    android:textSize="25sp"/>
+                <TextView
+                    android:id="@+id/recap_expiry"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:textSize="25sp"/>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                android:orientation="horizontal">
-
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_padding_size_medium">
                 <TextView
-                    android:id="@+id/recnotes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="3"
-                    android:text="Note"
-                    android:textSize="25sp"
-
-                    />
-
-                <EditText
-                    android:id="@+id/receditnotes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_width="0dp"
                     android:layout_weight="1"
-
-                    />
-
+                    android:layout_height="wrap_content"
+                    android:text="Note"
+                    android:layout_gravity="left"
+                    android:textSize="25sp"/>
+                <TextView
+                    android:id="@+id/recap_notes"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:textSize="25sp"/>
             </LinearLayout>
-
 
         </LinearLayout>
 
+
+
     </ScrollView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/updateRecapItem"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        android:src="@android:drawable/ic_menu_edit"
+        android:orientation="vertical"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintRight_toRightOf="parent">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/recap_btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:src="@android:drawable/ic_delete"
+            android:layout_marginTop="@dimen/fab_margin" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/recap_btn_modify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:src="@android:drawable/ic_menu_edit"
+            android:layout_marginTop="@dimen/fab_margin" />
+    </LinearLayout>
+
+
+
+
 </android.support.constraint.ConstraintLayout>
+
+
+

@@ -12,13 +12,13 @@ public class DbProduct {
     int quantity;
     double weight;
     double price;
-    int expiry;
+    long expiry;
     String notes;
     Long creation_date;
 
 
     public DbProduct(){}
-    public DbProduct(String _type, int _group_id, int _liked, String _name, int _category_id, int _quantity, double _weight, double _price, int _expiry, String _notes) {
+    public DbProduct(String _type, int _group_id, int _liked, String _name, int _category_id, int _quantity, double _weight, double _price, long _expiry, String _notes) {
         this.type = _type;
         this.group_id = _group_id;
         this.liked = _liked;
@@ -61,7 +61,7 @@ public class DbProduct {
     void setPrice(double _price){
         this.price = _price;
     }
-    void setExpiry(int _expiry){
+    void setExpiry(long _expiry){
         this.expiry = _expiry;
     }
     void setNotes(String _notes){
@@ -93,13 +93,11 @@ public class DbProduct {
     int getQuantity(){
         return quantity;
     }
-    double getWeight(){
-        return weight;
-    }
+    double getWeight(){ return weight; }
     double getPrice(){
         return price;
     }
-    int getExpiry(){
+    long getExpiry(){
         return expiry;
     }
     String getNotes(){

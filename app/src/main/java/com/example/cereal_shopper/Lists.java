@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +34,24 @@ public class Lists extends AppCompatActivity {
         PageAdapter adapter = new PageAdapter(getSupportFragmentManager());
 
         // Add Fragments to adapter one by one
-        adapter.addFragment(new ListaSpesa(), "Lista Spesa");
+        adapter.addFragment(new ShoppingList(), "Lista Spesa");
         adapter.addFragment(new Pantry(), "Pantry");
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        if (getIntent().hasExtra("tab_index")) {
+            try{
+                int index = getIntent().getExtras().getInt("tab_index");
+                Log.d("----", Integer.toString(index));
+                tabLayout.getTabAt(index).select();
+            }
+            catch (Exception e){
+                Log.d("Lists", "tab_index not selected");
+            }
+
+        }
     }
 
 
@@ -62,7 +74,7 @@ public class Lists extends AppCompatActivity {
 
             switch (position){
                 case 0:
-                    fragment=new ListaSpesa();
+                    fragment=new ShoppingList();
                     //fragment.setArguments(bundle);
                     break;
                 case 1:

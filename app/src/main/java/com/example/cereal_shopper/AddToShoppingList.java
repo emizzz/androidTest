@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -81,12 +82,18 @@ public class AddToShoppingList extends AppCompatActivity {
             int productId = extras.getInt("autocompile_fields");
 
             DbProduct favoriteSelectedProduct = db.getProduct(productId);
+
+            //set name
             nameView.setText(favoriteSelectedProduct.getName());
 
-            //vedo category
-
+            //set categories
+            int favoriteCatId = favoriteSelectedProduct.getCategoryId();
+            for(DbCategory category : categories){
+                if(category.getId() == favoriteCatId){
+                    categoriesView.setSelection(categAdapter.getPosition(category.getName()));
+                }
+            }
             quantity.setValue(favoriteSelectedProduct.getQuantity());
-
 
         }
 
@@ -127,7 +134,7 @@ public class AddToShoppingList extends AppCompatActivity {
         //favorites products
         ListView favoritesView = findViewById(R.id.add_list_product_favorites);
         List<DbProduct> favoritesProducts = db.getFavoritesProducts(globalApp.getCurrentGroupId());
-        adapterProductList favoritesAdapter = new adapterProductList(getApplicationContext(), favoritesProducts, "autocompile");
+        adapterProductList favoritesAdapter = new adapterProductList(getApplicationContext(), favoritesProducts, "click_in_favorites");
         favoritesView.setAdapter(favoritesAdapter);
 
 

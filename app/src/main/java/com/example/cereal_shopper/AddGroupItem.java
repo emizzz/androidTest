@@ -25,7 +25,7 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 
 // TODO : delete users from list
-// TODO : check other devices
+// TODO : check other devices (user list height)
 
 public class AddGroupItem extends AppCompatActivity {
     DatabaseHelper db;

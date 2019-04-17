@@ -12,7 +12,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class ListaSpesa extends Fragment{
+public class ShoppingList extends Fragment{
     private DatabaseHelper db;
     private FloatingActionButton fab;
     private Global globalApp;
@@ -40,7 +40,7 @@ public class ListaSpesa extends Fragment{
         listView.setAdapter(adapter);
 
 
-       fab = (FloatingActionButton) v.findViewById(R.id.addtospesa);
+        fab = (FloatingActionButton) v.findViewById(R.id.addtospesa);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

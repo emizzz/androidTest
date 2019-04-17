@@ -26,8 +26,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-
-
         <LinearLayout
             android:layout_width="fill_parent"
             android:orientation="vertical"
@@ -36,21 +34,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <TextView
-                android:id="@+id/TextViewTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Aggiungi a Dispensa"
-                android:textSize="34sp"
-                android:layout_weight="2"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp">
-            </TextView>
-
             <EditText
-                android:id="@+id/edittextname"
+                android:id="@+id/add_to_pantry_name"
                 android:layout_height="wrap_content"
                 android:hint="Prodotto"
                 android:inputType="textPersonName"
@@ -64,20 +49,14 @@
                 android:layout_weight="2">
             </EditText>
 
-            <EditText
-                android:id="@+id/edittextcategory"
-                android:layout_height="wrap_content"
-                android:hint="Categoria"
-                android:inputType="textPersonName"
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/add_to_pantry_category"
                 android:layout_width="match_parent"
-                android:textSize="25sp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp"
-
-                android:layout_weight="2">
-            </EditText>
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                android:layout_marginRight="@dimen/margin_padding_size_medium"
+                android:layout_marginBottom="@dimen/margin_padding_size_medium"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -99,7 +78,7 @@
                 <NumberPicker
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:id="@+id/numberpicker"
+                    android:id="@+id/add_to_pantry_quantity"
                     android:layout_weight="1"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
@@ -124,10 +103,11 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
                     />
-                <NumberPicker
+                <EditText
                     android:layout_width="wrap_content"
+                    android:inputType="numberDecimal"
                     android:layout_height="match_parent"
-                    android:id="@+id/pickerweight"
+                    android:id="@+id/add_to_pantry_weight"
                     android:layout_weight="1"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
@@ -135,22 +115,23 @@
 
             </LinearLayout>
 
+
             <EditText
-                android:id="@+id/price"
+                android:id="@+id/add_to_pantry_price"
                 android:layout_height="wrap_content"
                 android:hint="Prezzo"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:textSize="25sp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
-
                 android:layout_weight="2">
             </EditText>
+
             <EditText
-                android:id="@+id/expiration"
+                android:id="@+id/add_to_pantry_expiry"
                 android:layout_height="wrap_content"
                 android:hint="Scadenza"
                 android:inputType="textPersonName"
@@ -160,11 +141,10 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
-
                 android:layout_weight="2">
             </EditText>
             <EditText
-                android:id="@+id/editnotes"
+                android:id="@+id/add_to_pantry_notes"
                 android:layout_height="wrap_content"
                 android:hint="Note"
                 android:inputType="textPersonName"
@@ -187,7 +167,7 @@
     </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/checkbutton"
+        android:id="@+id/add_to_pantry_btn_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -199,7 +179,7 @@
         android:layout_marginBottom="16dp"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/barcode"
+        android:id="@+id/add_to_pantry_btn_barcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -207,6 +187,6 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/checkbutton"
+        app:layout_constraintBottom_toTopOf="@+id/add_to_pantry_btn_submit"
         app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>

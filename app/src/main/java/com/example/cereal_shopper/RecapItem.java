@@ -1,6 +1,8 @@
 package com.example.cereal_shopper;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -12,39 +14,42 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+/*
+* TODO: necessario un fab per eliminare e uno per modificare
+* */
 
 public class RecapItem extends AppCompatActivity {
-
-    TextView tvName;
-    TextView tvCategory;
-    TextView tvQuantity;
-    TextView tvWeight;
-    TextView tvPrice;
-    TextView tvExpiration;
-    TextView tvNote;
-
-    String oldname="";
-    String newname="";
-    String newcategory="";
-    int newquantity=0;
-    int newweight=0;
-    String newprice="";
-    String newexpiration="";
-    String newnote="";
+    private FloatingActionButton delete_btn;
+    private FloatingActionButton modify_btn;
+    private Toolbar toolbar;
+    private DbProduct currentProduct;
+    private DatabaseHelper db;
 
 
-    FloatingActionButton fbtn;
-    Toolbar toolbar;
+    private TextView nameView;
+    private TextView categoryView;
+    private TextView quantityView;
+    private TextView weightView;
+    private TextView priceView;
+    private TextView expiryView;
+    private TextView notesView;
 
-
-    boolean editable=false;
-    boolean isList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recap_item);
 
+        db = new DatabaseHelper(getApplicationContext());
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.left);
@@ -56,134 +61,129 @@ public class RecapItem extends AppCompatActivity {
             }
         });
 
-        isList=getIntent().getBooleanExtra("ISLISTASPESA",false);
-        oldname=getIntent().getStringExtra("OLDNAME");
-        newname=oldname;
-     //   newcategory=getIntent().getStringExtra("CATEGORY");
-        newquantity=getIntent().getIntExtra("QUANTITY",0);
-        newweight=getIntent().getIntExtra("WEIGHT",0);
-        newprice=getIntent().getStringExtra("PRICE");
-        newexpiration=getIntent().getStringExtra("EXPIRATION");
-        newnote=getIntent().getStringExtra("CATEGORY");
+        nameView = findViewById(R.id.recap_name);
+        categoryView = findViewById(R.id.recap_category);
+        quantityView = findViewById(R.id.recap_quantity);
+        weightView = findViewById(R.id.recap_weight);
+        priceView = findViewById(R.id.recap_price);
+        expiryView = findViewById(R.id.recap_expiry);
+        notesView = findViewById(R.id.recap_notes);
 
-        recap();
 
-        if(isList) {
-            LinearLayout w = (LinearLayout)findViewById(R.id.layrecwheight) ;
-            w.setVisibility(LinearLayout.GONE);
-            LinearLayout p = (LinearLayout)findViewById(R.id.layrecPrice) ;
-            p.setVisibility(LinearLayout.GONE);
-            LinearLayout e = (LinearLayout)findViewById(R.id.layrecExpiration) ;
-            e.setVisibility(LinearLayout.GONE);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.getInt("product_id", -1) != -1) {
+            int productId = -1;
+            productId = extras.getInt("product_id");
+
+            if(productId != -1 && productId != 0){
+                currentProduct = db.getProduct(productId);
+                compileFields(currentProduct);
+            }
+            else{
+                Toast.makeText(RecapItem.this, "Prodotto non trovato",
+                        Toast.LENGTH_SHORT).show();
+            }
         }
 
 
-        fbtn= (FloatingActionButton) findViewById(R.id.updateRecapItem);
 
-        fbtn.setOnClickListener(new View.OnClickListener() {
+        //---------------------------------------------fab buttons---------------------------------------------
+        delete_btn= (FloatingActionButton) findViewById(R.id.recap_btn_delete);
+        delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!editable) fbtn.setImageResource(R.drawable.check48);
-                else {
-                    //fbtn.setImageResource(android.R.drawable.ic_menu_edit);
-                    EditText product = (EditText) findViewById(R.id.receditName);
-                    final String nameString = product.getText().toString();
+                final View _v = v;
 
-                    EditText category = (EditText) findViewById(R.id.receditCategory);
-                    String categoryString = category.getText().toString();
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                db.deleteProduct(currentProduct.getId());
+                                Intent intent = new Intent(_v.getContext(), Lists.class);
 
-                    EditText quantity = (EditText) findViewById(R.id.receditQuantity);
-                    int quantityInt =Integer.parseInt( quantity.getText().toString());
+                                Bundle extras = getIntent().getExtras();
+                                if (extras != null && !extras.getString("from").equals("")) {
+                                    String from = extras.getString("from");
 
-                    EditText weight = (EditText) findViewById(R.id.receditweight);
-                    int weightInt =Integer.parseInt( weight.getText().toString());
+                                    if(from.equals("click_in_pantry_list")){
+                                        intent.putExtra( "tab_index", 1 );
+                                    }
+                                    else{
+                                        intent.putExtra( "tab_index", 0 );
+                                    }
+                                }
+                                _v.getContext().startActivity(intent);
+                                break;
 
-                    EditText price = (EditText) findViewById(R.id.receditprice);
-                    String priceString = price.getText().toString();
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                break;
+                        }
+                    }
+                };
 
-                    EditText expiration = (EditText) findViewById(R.id.receditExpiration);
-                    String expirationString = expiration.getText().toString();
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setMessage("Sicuro di voler eliminare questo prodotto?").setPositiveButton("Sì", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
+            }
+        });
+        modify_btn= (FloatingActionButton) findViewById(R.id.recap_btn_modify);
+        modify_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(), AddToPantry.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("autocompile_fields", currentProduct.getId());
+                intent.putExtra("recap_item", "Modifica prodotto");
 
-                    EditText notes = (EditText) findViewById(R.id.receditnotes);
-                    String notesString = notes.getText().toString();
-
-
-                    Intent data = new Intent ();
-                    data.putExtra("ISLIST", isList);
-                    data.putExtra("OLDNAME",oldname);
-                    data.putExtra("NAME",nameString);
-           //         data.putExtra("CATEGORY",categoryString);
-                    data.putExtra("QUANTITY",quantityInt);
-                    data.putExtra("WEIGHT",weightInt);
-                    data.putExtra("PRICE",priceString);
-                    data.putExtra("EXPIRATION",expirationString);
-                    data.putExtra("NOTE",notesString);
-                    setResult(Activity.RESULT_OK,data);
-                    finish();
-
+                Bundle extras = getIntent().getExtras();
+                if (extras != null && !extras.getString("from").equals("")) {
+                    String from = extras.getString("from");
+                    if(from.equals("click_in_pantry_list")){
+                        intent.putExtra( "tab_index", 1 );
+                    }
+                    else{
+                        intent.putExtra( "tab_index", 0 );
+                    }
                 }
-                editable=!editable;
-                recap();
 
+                v.getContext().startActivity(intent);
             }
         });
 
 
-
     }
+    void compileFields(DbProduct _product){
+        //get category name
+        List<DbCategory> categories = db.getCategories();
+        List<String> categories_name = new ArrayList<>();
+        String catName = "";
+        for(DbCategory category : categories){
+            if(category.getId() == _product.getCategoryId()){
+                catName = category.getName();
+                break;
+            }
+        }
 
+        nameView.setText(_product.getName());
+        categoryView.setText(catName);
 
-    public void recap(){
-        InputMethodManager imm = (InputMethodManager)getSystemService(
-                getApplicationContext().INPUT_METHOD_SERVICE);
-
-        tvName=(TextView)  findViewById(R.id.receditName);
-        tvName.setText(newname);
-        tvName.setFocusable(editable);
-        tvName.setFocusableInTouchMode(editable);
-        imm.hideSoftInputFromWindow(tvName.getWindowToken(), 0);
-
-/*
-        tvCategory=(TextView)  findViewById(R.id.receditCategory);
-        tvCategory.setText(newcategory);
-        tvCategory.setFocusable(editable);
-        tvCategory.setFocusableInTouchMode(editable);
-        imm.hideSoftInputFromWindow(tvCategory.getWindowToken(), 0);
-
-*/
-
-        tvQuantity=(TextView)  findViewById(R.id.receditQuantity);
-        tvQuantity.setText(Integer.toString(newquantity));
-        tvQuantity.setFocusable(editable);
-        tvQuantity.setFocusableInTouchMode(editable);
-        imm.hideSoftInputFromWindow(tvQuantity.getWindowToken(), 0);
-
-        tvWeight=(TextView)  findViewById(R.id.receditweight);
-        tvWeight.setText(Integer.toString(newweight));
-        tvWeight.setFocusable(editable);
-        tvWeight.setFocusableInTouchMode(editable);
-        imm.hideSoftInputFromWindow(tvWeight.getWindowToken(), 0);
-
-
-        tvPrice=(TextView)  findViewById(R.id.receditprice);
-        tvPrice.setText(newprice);
-        tvPrice.setFocusable(editable);
-        tvPrice.setFocusableInTouchMode(editable);
-        imm.hideSoftInputFromWindow(tvPrice.getWindowToken(), 0);
-
-
-        tvExpiration=(TextView)  findViewById(R.id.receditExpiration);
-        tvExpiration.setText(newexpiration);
-        tvExpiration.setFocusable(editable);
-        tvExpiration.setFocusableInTouchMode(editable);
-        imm.hideSoftInputFromWindow(tvExpiration.getWindowToken(), 0);
-
-
-        tvNote=(TextView)  findViewById(R.id.receditnotes);
-        tvNote.setText(newnote);
-        tvNote.setFocusable(editable);
-        tvNote.setFocusableInTouchMode(editable);
-        imm.hideSoftInputFromWindow(tvNote.getWindowToken(), 0);
-
+        if(_product.getQuantity() != -1){
+            quantityView.setText(String.valueOf(_product.getQuantity()));
+        }
+        if(_product.getWeight() != -1){
+            weightView.setText(String.valueOf(_product.getWeight()));
+        }
+        if(_product.getPrice() != -1){
+            priceView.setText(String.valueOf(_product.getPrice()));
+        }
+        if(_product.getExpiry() != -1){
+            Timestamp ts = new Timestamp(_product.getExpiry());
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            long expiry = ts.getTime();
+            Date date=new Date(ts.getTime()*1000);
+            expiryView.setText(String.valueOf(dateFormat.format(date)));
+        }
+        notesView.setText(String.valueOf(_product.getNotes()));
     }
 }

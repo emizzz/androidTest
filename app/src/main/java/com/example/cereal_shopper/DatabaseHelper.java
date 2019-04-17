@@ -17,7 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String LOG = "DatabaseHelper";
 
     // Database Version
-    private static final int DATABASE_VERSION = 20;
+    private static final int DATABASE_VERSION = 25;
 
     // Database Name
     private static final String DATABASE_NAME = "cerealShopper";
@@ -155,15 +155,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         DbUser newUser2 = new DbUser("Lucia", "lucia@lauri.it", 0, group_ids2);
         this.createUser(newUser2);
 
-        //create products
-        DbProduct product1 = new DbProduct("pantry", 1, 1, "Latte", 5, 2, 1000.43, 2.73, 1567517309, "");
-        DbProduct product2 = new DbProduct("pantry", 1, 1, "Pasta", 4, 2, 2000, 3.99, 1567517309, "");
-        DbProduct product3 = new DbProduct("shopping_list", 1, 0, "Pan bauletto", 4, 1, -1, -1, -1, "");
-        DbProduct product4 = new DbProduct("shopping_list", 1, 0, "Formaggio grana", 5, 1, -1, -1, -1, "");
-        this.createProduct(product1);
-        this.createProduct(product2);
-        this.createProduct(product3);
-        this.createProduct(product4);
 
         //create categories
         this.createCategory(new DbCategory("Cereali, pane, pasta e patate"));
@@ -171,6 +162,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         this.createCategory(new DbCategory("Latte, yogurt e formaggi"));
         this.createCategory(new DbCategory("Carne, pesce uova e legumi"));
         this.createCategory(new DbCategory("Grassi e oli da condimento"));
+
+        //create products
+        DbProduct product1 =  new DbProduct();
+        DbProduct product2 =  new DbProduct();
+        DbProduct product3 = new DbProduct();
+        DbProduct product4 = new DbProduct();
+
+        List<DbCategory> categories = this.getCategories();
+        for(DbCategory cat : categories){
+            if(cat.getName().equals("Cereali, pane, pasta e patate")){
+                product2 = new DbProduct("pantry", 1, 1, "Pasta", cat.getId(), 2, 2000, 3.99, 1567517309, "");
+                product3 = new DbProduct("shopping_list", 1, 0, "Pan bauletto", cat.getId(), 1, -1, -1, -1, "");
+            }
+            else if(cat.getName().equals("Latte, yogurt e formaggi")){
+                product1 = new DbProduct("pantry", 1, 1, "Latte", cat.getId(), 2, 1000.43, 2.73, 1567517309, "");
+                product4 = new DbProduct("shopping_list", 1, 0, "Formaggio grana", cat.getId(), 1, -1, -1, -1, "");
+            }
+        }
+        this.createProduct(product1);
+        this.createProduct(product2);
+        this.createProduct(product3);
+        this.createProduct(product4);
 
         return currentUser;
     }
@@ -384,6 +397,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return new_product_copy;
+    }
+
+    public int updateProduct(DbProduct _product){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_PRODUCT_TYPE, _product.getType());
+        values.put(KEY_PRODUCT_GROUP_ID, _product.getGroupId());
+        values.put(KEY_PRODUCT_LIKED, _product.getLiked());
+        values.put(KEY_PRODUCT_NAME, _product.getName());
+        values.put(KEY_PRODUCT_CATEGORY_ID, _product.getCategoryId());
+        values.put(KEY_PRODUCT_QUANTITY, _product.getQuantity());
+        values.put(KEY_PRODUCT_WEIGHT, _product.getWeight());
+        values.put(KEY_PRODUCT_PRICE, _product.getPrice());
+        values.put(KEY_PRODUCT_EXPIRY, _product.getExpiry());
+        values.put(KEY_PRODUCT_NOTES, _product.getNotes());
+        values.put(KEY_CREATED_AT, _product.getCreationDate());
+
+        int product_id = db.update(TABLE_PRODUCTS, values, KEY_ID + "=" + _product.getId(),null);
+
+        return product_id;
+    }
+
+    public void deleteProduct(int product_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_PRODUCTS, KEY_ID + " = ?",
+                new String[] { String.valueOf(product_id) });
     }
 
     public ArrayList<DbProduct> getProducts(int _group_id, String _type) {

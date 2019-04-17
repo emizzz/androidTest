@@ -47,13 +47,12 @@ public class adapterUserList extends ArrayAdapter<DbUser> {
         TextView email = (TextView) listItem.findViewById(R.id.user_item_email);
         TextView balance = (TextView) listItem.findViewById(R.id.user_item_counter);
 
-        name.setText(currentUser.getName() + currentUser.getSerializedGroupId());
+        name.setText(currentUser.getName());
         email.setText(currentUser.getEmail());
         balance.setText( Integer.toString(currentUser.getBalance()) );
 
 
         //--------------------------------------------delete user------------------------------------------------
-        // TODO: delete item
         LinearLayout item = listItem.findViewById(R.id.user_list_item);
 
         item.setOnLongClickListener(new View.OnLongClickListener() {

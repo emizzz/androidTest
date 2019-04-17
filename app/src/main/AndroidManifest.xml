@@ -13,7 +13,10 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".Lists"></activity>
+            android:name=".AddToPantry"
+            android:label="@string/title_activity_add_to_pantry"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Lists" />
         <activity
             android:name=".AddGroupItem"
             android:label="@string/title_activity_add_group_item"

@@ -41,7 +41,7 @@ public class adapterGroupList extends ArrayAdapter<DbGroup> {
         final DbGroup currentGroup = groupList.get(position);
 
         TextView name = (TextView) listItem.findViewById(R.id.group_item_name);
-        name.setText(currentGroup.getTitle() + " " + currentGroup.getId());
+        name.setText(currentGroup.getTitle());
 
 
         //--------------------------------------------select group------------------------------------------------
