@@ -16,13 +16,12 @@
 
             <ImageView
                 android:id="@+id/product_item_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/photo_icon_size"
+                android:layout_height="@dimen/photo_icon_size"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:padding="@dimen/margin_padding_size_small"
                 android:src="@android:drawable/ic_dialog_info"
-                android:tint="@color/colorPrimary" />
+                />
 
             <TextView
                 android:id="@+id/product_item_name"
@@ -30,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="0dp"
                 android:paddingLeft="@dimen/margin_padding_size_medium"
-                android:text="Latte"
+                android:paddingTop="@dimen/margin_padding_size_medium"
                 android:textSize="@dimen/text_size_large"
                 android:layout_toRightOf="@id/product_item_image"/>
 
@@ -39,7 +38,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/margin_padding_size_medium"
-                android:text="parzialmente scremato"
                 android:textSize="@dimen/text_size_small"
                 android:layout_below="@+id/product_item_name"
                 android:layout_toRightOf="@id/product_item_image"/>
@@ -47,11 +45,14 @@
             <ImageButton
                 android:id="@+id/product_item_icon1"
                 android:layout_alignParentRight="true"
-                android:tint="@color/colorPrimary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:tint="@color/colorPrimaryDark"
+                android:backgroundTint="@color/white"
+                android:layout_width="@dimen/standard_touch_size"
+                android:layout_height="@dimen/standard_touch_size"
                 android:padding="@dimen/margin_padding_size_small"
-                android:src="@android:drawable/ic_menu_delete" />
+                android:src="@drawable/ic_baseline_done_24px"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"/>
 
 
 

@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-
+/*
+ * shopping list fragment, contained in Lists
+ **/
 public class ShoppingList extends Fragment{
     private DatabaseHelper db;
     private FloatingActionButton fab;
@@ -45,7 +47,6 @@ public class ShoppingList extends Fragment{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AddToShoppingList.class);
-                //intent.putExtra("group_id", bundle.getInt("group_id"));
                 getActivity().startActivity(intent);
 
             }

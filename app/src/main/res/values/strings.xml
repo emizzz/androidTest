@@ -1,10 +1,52 @@
 <resources>
     <string name="app_name">Cereal Shopper</string>
-    <string name="title_activity_add_group_item">Gruppi</string>                                                         <!--add the € sign -->
+    <string name="title_activity_add_group_item">Gruppi</string><!--add the € sign -->
+
 
 
     <string name="prices"> %1$s € </string>
     <string name="title_activity_lists">Lists</string>
     <string name="title_activity_add_to_pantry">AddToPantry</string>
+    <string name="azzera">Azzera</string>
+    <string name="name">Nome</string>
+    <string name="nome_gruppo">Nome gruppo</string>
+    <string name="componenti">Componenti</string>
+    <string name="quantit">Quantità</string>
+    <string name="peso_g">Peso g</string>
+    <string name="prezzo">Prezzo</string>
+    <string name="scadenza">Scadenza</string>
+    <string name="note">Note</string>
+    <string name="_16">16 €</string>
+    <string name="aggiungi_prodotto">Aggiungi Prodotto</string>
+    <string name="prodotto">Prodotto</string>
+    <string name="aggiungi">Aggiungi</string>
+    <string name="preferiti">Preferiti</string>
+    <string name="aggiorna">Aggiorna</string>
+    <string name="categoria">Categoria</string>
+    <string name="peso">Peso</string>
+    <string name="uscita_gruppo">Sei sicuro di voler uscire dal gruppo?</string>
+    <string name="esempio1">Pan bauletto</string>
+    <string name="esempio2">Latte</string>
+    <string name="esempio3">Pasta</string>
+    <string name="esempio4">Formaggio grana</string>
+    <string name="aggiunta_lista_spesa">Vuoi riaggiungere il prodotto alla lista della spesa oppure eliminarlo definitivamente?</string>
+    <string name="User1">Matteo</string>
+    <string name="user2">Marco</string>
+    <string name="user3">Lucia</string>
+    <string name="elimina_utente">Vuoi eliminare questo utente dal gruppo?</string>
+    <string name="si">Sì</string>
+    <string name="no">No</string>
+    <string name="nuovo_gruppo">Nuovo Gruppo</string>
+    <string name="aggiungi_user">Aggiungi una persona</string>
+    <string name="scegli_nome">Scegli un nome per il gruppo</string>
+    <string name="funz_barrcode">Funzione di barcode scan non ancora implementata   test di autocompletamento</string>
+    <string name="scegli_nome_prodotto">Scegli un nome per il prodotto</string>
+    <string name="lista_spesa">Lista Spesa</string>
+    <string name="pantry">Dispensa</string>
+    <string name="prodotto_non_trovato">Prodotto non trovato</string>
+    <string name="elimina_prodotto">Sicuro di voler eliminare questo prodotto?</string>
+    <string name="modifica_prodotto">Modifica prodotto</string>
+    <string name="me">Me</string>
+
 
 </resources>

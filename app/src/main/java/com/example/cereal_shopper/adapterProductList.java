@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +22,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/*adapter to the list of products that the user can add to or delete from the two different lists
+ *it implements  buttons in each element of the list
+**/
 public class adapterProductList extends ArrayAdapter<DbProduct> {
     DatabaseHelper db;
     private Context mContext;
@@ -54,6 +58,15 @@ public class adapterProductList extends ArrayAdapter<DbProduct> {
 
         name.setText(currentProduct.getName());
         description.setText(currentProduct.getNotes());
+
+        //---------------------------------------examples of icon-------------------------------
+
+        ImageView image = listItem.findViewById(R.id.product_item_image);
+        if(currentProduct.getName().equals(mContext.getString(R.string.esempio1))) image.setImageResource(R.drawable.pane);
+        if(currentProduct.getName().equals(mContext.getString(R.string.esempio2))) image.setImageResource(R.drawable.latte);
+        if(currentProduct.getName().equals(mContext.getString(R.string.esempio3))) image.setImageResource(R.drawable.pasta);
+        if(currentProduct.getName().equals(mContext.getString(R.string.esempio4))) image.setImageResource(R.drawable.grana);
+
 
 
 
@@ -92,6 +105,12 @@ public class adapterProductList extends ArrayAdapter<DbProduct> {
 
         //--------------------------------------------icon click------------------------------------------------
         ImageButton icon = (ImageButton) listItem.findViewById(R.id.product_item_icon1);
+
+        if(!currentProduct.getType().equals("shopping_list")){
+            icon.setImageResource(R.drawable.ic_baseline_delete_24px);
+        }
+
+
         icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,13 +135,9 @@ public class adapterProductList extends ArrayAdapter<DbProduct> {
                             switch (which){
                                 case DialogInterface.BUTTON_POSITIVE:   //delete
 
-                                    /* TODO: new activity or notifyDataSetChanged() ?? better to do this in "real time", not with a new activity */
                                     db.deleteProduct(currentProduct.getId());
-                                    Intent intent = new Intent(_v.getContext(), Lists.class);
-                                    intent.putExtra( "tab_index", 1 );
-                                    _v.getContext().startActivity(intent);
+                                    ((Lists) mContext).recreate();
 
-                                    break;
 
                                 case DialogInterface.BUTTON_NEGATIVE:   //add to shopping list
 
@@ -133,12 +148,9 @@ public class adapterProductList extends ArrayAdapter<DbProduct> {
                                         currentProduct.setQuantity(1);
                                         currentProduct.setExpiry(-1);
                                         currentProduct.setNotes("");
-                                        db.updateProduct(currentProduct);
 
-                                        /* TODO: new activity or notifyDataSetChanged() ?? better to do this in "real time", not with a new activity */
-                                        Intent intent1 = new Intent(_v.getContext(), Lists.class);
-                                        intent1.putExtra( "tab_index", 1 );
-                                        _v.getContext().startActivity(intent1);
+                                        db.updateProduct(currentProduct);
+                                        ((Lists) mContext).recreate();
 
                                     }
                                     catch (Exception e){
@@ -152,7 +164,7 @@ public class adapterProductList extends ArrayAdapter<DbProduct> {
                     };
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                    builder.setMessage("Vuoi riaggiungere il prodotto alla lista della spesa oppure eliminarlo definitivamente?").setPositiveButton("Elimina", dialogClickListener)
+                    builder.setMessage(mContext.getString(R.string.aggiunta_lista_spesa)).setPositiveButton("Elimina", dialogClickListener)
                             .setNegativeButton("Riaggiungi", dialogClickListener).show();
 
                 }
@@ -160,9 +172,6 @@ public class adapterProductList extends ArrayAdapter<DbProduct> {
 
             }
         });
-
-
-
 
         return listItem;
     }

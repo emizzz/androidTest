@@ -5,7 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RecapItem">
-
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/cereal_bg"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+         />
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
@@ -37,18 +45,18 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Prodotto"
+                    android:text="@string/prodotto"
                     android:layout_gravity="left"
-                    android:textSize="25sp"/>
+                    android:textSize="@dimen/text_size_large"/>
                 <TextView
                     android:id="@+id/recap_name"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/zero"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text=""
                     android:layout_gravity="right"
                     android:gravity="right"
-                    android:textSize="25sp"/>
+                    android:textSize="@dimen/text_size_large"/>
             </LinearLayout>
 
             <LinearLayout
@@ -60,9 +68,9 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Categoria"
+                    android:text="@string/categoria"
                     android:layout_gravity="left"
-                    android:textSize="25sp"/>
+                    android:textSize="@dimen/text_size_large"/>
                 <TextView
                     android:id="@+id/recap_category"
                     android:layout_width="0dp"
@@ -71,7 +79,7 @@
                     android:text=""
                     android:layout_gravity="right"
                     android:gravity="right"
-                    android:textSize="25sp"/>
+                    android:textSize="@dimen/text_size_large"/>
             </LinearLayout>
 
             <LinearLayout
@@ -83,18 +91,18 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Quantità"
+                    android:text="@string/quantit"
                     android:layout_gravity="left"
-                    android:textSize="25sp"/>
+                    android:textSize="@dimen/text_size_large"/>
                 <TextView
                     android:id="@+id/recap_quantity"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/zero"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text=""
                     android:layout_gravity="right"
                     android:gravity="right"
-                    android:textSize="25sp"/>
+                    android:textSize="@dimen/text_size_large"/>
             </LinearLayout>
 
             <LinearLayout
@@ -103,21 +111,21 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/margin_padding_size_medium">
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/zero"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Peso"
+                    android:text="@string/peso"
                     android:layout_gravity="left"
-                    android:textSize="25sp"/>
+                    android:textSize="@dimen/text_size_large"/>
                 <TextView
                     android:id="@+id/recap_weight"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/zero"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text=""
                     android:layout_gravity="right"
                     android:gravity="right"
-                    android:textSize="25sp"/>
+                    android:textSize="@dimen/text_size_large"/>
             </LinearLayout>
 
             <LinearLayout
@@ -126,21 +134,21 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/margin_padding_size_medium">
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/zero"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Prezzo"
+                    android:text="@string/prezzo"
                     android:layout_gravity="left"
-                    android:textSize="25sp"/>
+                    android:textSize="@dimen/text_size_large"/>
                 <TextView
                     android:id="@+id/recap_price"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/zero"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text=""
                     android:layout_gravity="right"
                     android:gravity="right"
-                    android:textSize="25sp"/>
+                    android:textSize="@dimen/text_size_large"/>
             </LinearLayout>
 
             <LinearLayout
@@ -149,12 +157,12 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/margin_padding_size_medium">
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/zero"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Scadenza"
+                    android:text="@string/scadenza"
                     android:layout_gravity="left"
-                    android:textSize="25sp"/>
+                    android:textSize="@dimen/text_size_large"/>
                 <TextView
                     android:id="@+id/recap_expiry"
                     android:layout_width="0dp"
@@ -163,7 +171,7 @@
                     android:text=""
                     android:layout_gravity="right"
                     android:gravity="right"
-                    android:textSize="25sp"/>
+                    android:textSize="@dimen/text_size_large"/>
             </LinearLayout>
 
             <LinearLayout
@@ -172,21 +180,21 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/margin_padding_size_medium">
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/zero"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Note"
+                    android:text="@string/note"
                     android:layout_gravity="left"
-                    android:textSize="25sp"/>
+                    android:textSize="@dimen/text_size_large"/>
                 <TextView
                     android:id="@+id/recap_notes"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/zero"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text=""
                     android:layout_gravity="right"
                     android:gravity="right"
-                    android:textSize="25sp"/>
+                    android:textSize="@dimen/text_size_large"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -209,21 +217,25 @@
             android:id="@+id/recap_btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_margin"
             android:clickable="true"
-            android:src="@android:drawable/ic_delete"
-            android:layout_marginTop="@dimen/fab_margin" />
+            android:src="@drawable/ic_baseline_delete_24px"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:scaleType="fitCenter"
+            android:tint="@color/white"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/recap_btn_modify"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginRight="@dimen/margin_padding_size_medium"
+            android:layout_marginBottom="@dimen/margin_padding_size_medium"
             android:clickable="true"
-            android:src="@android:drawable/ic_menu_edit"
-            android:layout_marginTop="@dimen/fab_margin" />
+            android:src="@drawable/ic_pencil_edit_button"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:scaleType="fitCenter"
+            android:tint="@color/white"/>
     </LinearLayout>
 
 

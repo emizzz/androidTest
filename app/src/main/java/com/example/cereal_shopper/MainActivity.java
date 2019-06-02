@@ -42,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new adapterGroupList(this, db_groups);
         listView.setAdapter(adapter);
 
-
-
+        findViewById(R.id.addgroup).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         /*---------------------------------CREATE GROUP---------------------------------*/
         //FAB button
         fab = (FloatingActionButton) findViewById(R.id.addgroup);
@@ -52,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),AddGroupItem.class);
                 startActivity(intent);
-                //startActivityForResult(intent,REQUEST_CODE_GROUP);
-
             }
         });
 

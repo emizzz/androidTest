@@ -2,6 +2,10 @@ package com.example.cereal_shopper;
 
 import java.util.Date;
 
+/*
+ * class database product and it's functions
+ **/
+
 public class DbProduct {
     int id;
     String type;

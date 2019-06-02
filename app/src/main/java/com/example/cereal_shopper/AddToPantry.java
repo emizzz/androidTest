@@ -28,6 +28,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 /*
+*this activity can either create a product and add it to the pantry or modify/confirm an item into the pantry that was int he shopping list
 * if autocompile_fields is passed: this activity precompile the form with the product's info (the product's id is passed with the extras)
 * else: the form is initialized empty
 * */
@@ -143,6 +144,15 @@ public class AddToPantry extends AppCompatActivity {
         };
 
 
+        getSupportActionBar().setTitle(currentProduct.getName());
+        toolbar.setNavigationIcon(R.drawable.left);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();          }
+        });
+
         FloatingActionButton submitFab = findViewById(R.id.add_to_pantry_btn_submit);
         submitFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,6 +172,8 @@ public class AddToPantry extends AppCompatActivity {
                         if(!priceView.getText().toString().equals("")){
                             price = Double.parseDouble(priceView.getText().toString().replace(',', '.'));
                         }
+
+
 
                         String notes = notesView.getText().toString();
 
@@ -184,6 +196,14 @@ public class AddToPantry extends AppCompatActivity {
                             db.updateProduct(new_product);
                         }
 
+                        //adds the price of the brought item to the user balance
+                        if(currentProduct.getPrice()!=-1){
+                            double newB= globalApp.getCurrentUser().getBalance()+currentProduct.getPrice();
+                            globalApp.getCurrentUser().setBalance(newB);
+
+                            globalApp.db.updateUser(globalApp.getCurrentUser());
+                        }
+
 
 
                         Intent intent = new Intent(getApplicationContext(), Lists.class);
@@ -198,7 +218,7 @@ public class AddToPantry extends AppCompatActivity {
                     }
                 }
                 else{
-                    Toast.makeText(AddToPantry.this, "Scegli un nome per il prodotto",
+                    Toast.makeText(AddToPantry.this, getString(R.string.scegli_nome_prodotto),
                             Toast.LENGTH_SHORT).show();
                 }
 
@@ -212,7 +232,7 @@ public class AddToPantry extends AppCompatActivity {
         cameraFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AddToPantry.this, "Funzione di barcode scan non ancora implementata \n test di autocompletamento",
+                Toast.makeText(AddToPantry.this, getString(R.string.funz_barrcode),
                         Toast.LENGTH_SHORT).show();
 
                 DbProduct testProduct = globalApp.getBarcodeTestProduct();
@@ -229,7 +249,8 @@ public class AddToPantry extends AppCompatActivity {
     }
     void setFields(DbProduct product){
         //set name
-        nameView.setText( product.getName() );
+        nameView.setText( currentProduct.getName() );
+
 
         //set categories
         int favoriteCatId = product.getCategoryId();
@@ -249,7 +270,7 @@ public class AddToPantry extends AppCompatActivity {
 
         //set price
         if(product.getPrice() != -1){
-            priceView.setText(String.valueOf(product.getPrice()));
+           priceView.setText(String.valueOf(product.getPrice()));
         }
 
         //set expiry

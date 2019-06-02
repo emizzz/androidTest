@@ -2,10 +2,17 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/cereal_bg"
 
+        />
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:background="?attr/colorPrimary"
@@ -22,9 +29,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_size_medium"
-            android:text="Nome"
+            android:text="@string/name"
             android:layout_below="@+id/toolbar"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_size_large"
             android:padding="@dimen/margin_padding_size_medium"
             android:layout_weight="2">
         </TextView>
@@ -34,10 +41,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:hint="Nome gruppo"
+            android:hint="@string/nome_gruppo"
             android:inputType="textPersonName"
             android:padding="@dimen/margin_padding_size_medium"
-            android:textSize="25sp">
+            android:textSize="@dimen/text_size_large">
         </EditText>
 
         <TextView
@@ -46,30 +53,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_size_medium"
-            android:text="Componenti"
-            android:textSize="20sp"
+            android:text="@string/componenti"
+            android:textSize="@dimen/text_size_large"
             android:padding="@dimen/margin_padding_size_medium"
             android:layout_weight="2">
         </TextView>
+
         <ListView
             android:id="@+id/group_members_list"
             android:layout_height="match_parent"
             android:layout_width="wrap_content"
             android:layout_below="@+id/group_members"
             android:scrollbars="vertical"
-            android:paddingBottom="60dp">
+            android:paddingBottom="@dimen/margin_padding_size_xxlarge">
         </ListView>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/AddMember"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_padding_size_large"
-            android:layout_marginBottom="60dp"
-            android:clickable="true"
-            android:src="@drawable/plus48"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"/>
 
         <Button
             android:layout_width="match_parent"
@@ -78,98 +75,18 @@
             android:id="@+id/apply_group_button"
             android:text="Applica"
             style="@style/Widget.AppCompat.Button.Colored" />
-</RelativeLayout>
 
-
-<!--
-<?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:layout_width="match_parent"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/AddMember"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/add_group_item1"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_below="@+id/toolbar">
-
-        <TextView
-            android:id="@+id/new_group_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_padding_size_medium"
-            android:text="Nome"
-            android:textSize="20sp"
-            android:padding="@dimen/margin_padding_size_medium"
-            android:layout_weight="2">
-        </TextView>
-        <EditText
-            android:id="@+id/new_goup_name"
-            android:layout_below="@+id/new_group_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:hint="Nome gruppo"
-            android:inputType="textPersonName"
-            android:padding="@dimen/margin_padding_size_medium"
-            android:textSize="25sp">
-        </EditText>
-
-        <TextView
-            android:id="@+id/group_members"
-            android:layout_below="@+id/new_goup_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_padding_size_medium"
-            android:text="Componenti"
-            android:textSize="20sp"
-            android:padding="@dimen/margin_padding_size_medium"
-            android:layout_weight="2">
-        </TextView>
-        <ListView
-            android:id="@+id/group_members_list"
-            android:layout_height="match_parent"
-            android:layout_width="wrap_content"
-            android:layout_below="@+id/group_members"
-            android:scrollbars="vertical">
-
-        </ListView>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/AddMember"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_padding_size_large"
-            android:clickable="true"
-            android:src="@drawable/plus48"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/add_group_item1"
-        >
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:id="@+id/apply_group_button"
-            android:text="Applica" />
-    </RelativeLayout>
+        android:layout_above="@+id/apply_group_button"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:adjustViewBounds="true"
+        android:clickable="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_add_user_button"
+        android:tint="@color/white" />
 </RelativeLayout>
-
--->

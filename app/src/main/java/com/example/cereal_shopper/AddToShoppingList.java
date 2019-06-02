@@ -18,6 +18,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+*this activity can either create a product and add it to the shopping list or confirm a favorite product
+**/
 public class AddToShoppingList extends AppCompatActivity {
     DatabaseHelper db;
     Global globalApp;
@@ -123,7 +126,7 @@ public class AddToShoppingList extends AppCompatActivity {
                     }
                 }
                 else{
-                    Toast.makeText(AddToShoppingList.this, "Scegli un nome per il prodotto",
+                    Toast.makeText(AddToShoppingList.this, R.string.scegli_nome_prodotto,
                             Toast.LENGTH_SHORT).show();
                 }
 

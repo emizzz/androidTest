@@ -1,32 +1,27 @@
 package com.example.cereal_shopper;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 
-// TODO : delete users from list
-// TODO : check other devices (user list height)
-
+/*
+*Activity for the creation/modification of a group item, depending on how the activity has been created
+* the user interacts with the elements to create, choose or change the attributes oft he group
+**/
 public class AddGroupItem extends AppCompatActivity {
     DatabaseHelper db;
     private adapterUserList adapter;
@@ -44,12 +39,8 @@ public class AddGroupItem extends AppCompatActivity {
         db = new DatabaseHelper(getApplicationContext());
         Global globalApp = (Global)getApplicationContext();
         setContentView(R.layout.activity_add_group_item);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         group_name = (EditText) findViewById(R.id.new_goup_name);
         members_list = (ListView) findViewById(R.id.group_members_list);
-
-
 
         Bundle extras = getIntent().getExtras();
         if (extras != null){
@@ -64,17 +55,31 @@ public class AddGroupItem extends AppCompatActivity {
                 Log.d("AddGroupItem", "Prev User not picked");
             }
 
-            //--------------------------------to delete user?--------------------------------
-            /*try{
-                for(DbUser _user : to_add_users){
-                    if(_user.getId() == extras.getInt("USER_TO_DELETE")) to_add_users.remove(_user);
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle(currentGroup.getTitle());
+            toolbar.setNavigationIcon(R.drawable.left);
+
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
                 }
-            }
-            catch(Exception e){
-                Log.d("AddGroupItem", "User not deleted");
-            }*/
+            });
 
 
+        }else{
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle(R.string.nuovo_gruppo);
+            toolbar.setNavigationIcon(R.drawable.left);
+
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    startActivity(intent);            }
+            });
         }
 
         //get all the users
@@ -118,7 +123,7 @@ public class AddGroupItem extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new SimpleSearchDialogCompat(AddGroupItem.this, "Aggiungi una persona",
+                new SimpleSearchDialogCompat(AddGroupItem.this, getString(R.string.aggiungi_user),
                         "...", null, all_users,
                         new SearchResultListener<AddGroupUser>() {
                             @Override
@@ -182,7 +187,7 @@ public class AddGroupItem extends AppCompatActivity {
 
                 }
                 else{
-                    Toast.makeText(AddGroupItem.this, "Scegli un nome per il gruppo",
+                    Toast.makeText(AddGroupItem.this, getString(R.string.scegli_nome),
                             Toast.LENGTH_SHORT).show();
                 }
 
@@ -195,6 +200,10 @@ public class AddGroupItem extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         Log.d("dawadwadwa","dwdawdwadadwa");
+    }
+
+    public Integer getGroupId(){
+        return this.currentGroup.getId();
     }
 
 }

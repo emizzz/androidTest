@@ -11,6 +11,8 @@ import java.util.List;
 
 import static java.security.AccessController.getContext;
 
+
+//database implementation
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Logcat tag
@@ -203,6 +205,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_CREATED_AT, _group.getCreationDate());
 
         long group_id = db.insert(TABLE_GROUPS, null, values);
+
         return group_id;
     }
 
@@ -288,7 +291,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 _user.setId(c.getInt((c.getColumnIndex(KEY_ID))));
                 _user.setName((c.getString(c.getColumnIndex(KEY_USER_NAME))));
                 _user.setEmail((c.getString(c.getColumnIndex(KEY_USER_EMAIL))));
-                _user.setBalance((c.getInt(c.getColumnIndex(KEY_USER_BALANCE))));
+                _user.setBalance((c.getDouble(c.getColumnIndex(KEY_USER_BALANCE))));
                 _user.setSerializedGroupId((c.getString(c.getColumnIndex(KEY_USER_GROUP_IDS))));
                 _user.setCreationDate(c.getInt(c.getColumnIndex(KEY_CREATED_AT)));
 
@@ -310,7 +313,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             new_user_copy.setId( cursor.getInt( cursor.getColumnIndex(KEY_ID)) );
             new_user_copy.setName( cursor.getString( cursor.getColumnIndex(KEY_USER_NAME)) );
             new_user_copy.setEmail( cursor.getString( cursor.getColumnIndex(KEY_USER_EMAIL)) );
-            new_user_copy.setBalance( cursor.getInt( cursor.getColumnIndex(KEY_USER_BALANCE)) );
+            new_user_copy.setBalance( cursor.getDouble( cursor.getColumnIndex(KEY_USER_BALANCE)) );
             new_user_copy.setSerializedGroupId( cursor.getString( cursor.getColumnIndex(KEY_USER_GROUP_IDS)) );
             new_user_copy.setCreationDate( cursor.getLong( cursor.getColumnIndex(KEY_CREATED_AT)) );
         }
@@ -508,6 +511,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return category_id;
     }
 
+
     public List<DbCategory> getCategories() {
         List<DbCategory> categories = new ArrayList<DbCategory>();
         String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES + " ORDER BY " + KEY_CATEGORIES_NAME +  " ASC";
@@ -528,7 +532,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return categories;
     }
+ // checks if the database is empty, it's called at the beginning to check if the database needs to be populated with tests items
+    public boolean isEmpty(){
+        String count = "SELECT  count(*) FROM " + TABLE_USERS;
 
-
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(count, null);
+        if (c.moveToFirst()) {
+            int j = c.getInt(0);
+            if(j>0) return false;
+            else return true;
+        }
+        return true;
+    }
 }
 

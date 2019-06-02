@@ -1,6 +1,8 @@
 package com.example.cereal_shopper;
 import java.util.Date;
-
+/*
+ * class database groups and it's functions
+ **/
 public class DbGroup {
     int id;
     String title;

@@ -6,16 +6,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-* TODO:
-* GRAFICA,
-* UNITA DI MISURA NEI LAYOUT,
-* DIMENSIONI TESTO UGUALI
-* BACK BUTTONS
-* PLACEHOLDERS PER IMMAGINI UTENTE E PRODOTTI
-* FUNZIONALITA AZZERAMENTO
-*
-* */
 
 public class Global extends Application {
     DatabaseHelper db;
@@ -30,7 +20,9 @@ public class Global extends Application {
         db = new DatabaseHelper(getApplicationContext());
 
         //FIRST TIME YOU RUN THE APP (OR IF YOU CHANGE THE DB VERSION)
-        //db.firstStart();
+
+        if(db.isEmpty())
+            db.firstStart();
 
         barcodeTestProduct = createBarcodeTestProduct();
 

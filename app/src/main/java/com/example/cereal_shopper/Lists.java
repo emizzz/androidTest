@@ -1,5 +1,6 @@
 package com.example.cereal_shopper;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,17 +8,20 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+/*
+*Activity with two fragments for the pantry and shopping list
+**/
 public class Lists extends AppCompatActivity {
     DatabaseHelper db;
     int currentGroupId;
     private Global globalApp;
-    private DbGroup currentGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +38,8 @@ public class Lists extends AppCompatActivity {
         PageAdapter adapter = new PageAdapter(getSupportFragmentManager());
 
         // Add Fragments to adapter one by one
-        adapter.addFragment(new ShoppingList(), "Lista Spesa");
-        adapter.addFragment(new Pantry(), "Pantry");
+        adapter.addFragment(new ShoppingList(), getString(R.string.lista_spesa));
+        adapter.addFragment(new Pantry(), getString(R.string.pantry));
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -52,6 +56,18 @@ public class Lists extends AppCompatActivity {
             }
 
         }
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(db.getGroup(currentGroupId).getTitle());
+        toolbar.setNavigationIcon(R.drawable.left);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);            }
+        });
     }
 
 
@@ -69,17 +85,12 @@ public class Lists extends AppCompatActivity {
 
             Fragment fragment=null;
 
-            //Bundle bundle = new Bundle();
-            //bundle.putInt("group_id", currentGroupId);
-
             switch (position){
                 case 0:
                     fragment=new ShoppingList();
-                    //fragment.setArguments(bundle);
                     break;
                 case 1:
                     fragment=new Pantry();
-                    //fragment.setArguments(bundle);
                     break;
                 default:
                     fragment=null;

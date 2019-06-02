@@ -1,5 +1,9 @@
 package com.example.cereal_shopper;
 
+/*
+ * class database categories and it's functions
+ **/
+
 public class DbCategory {
     int id;
     String name;

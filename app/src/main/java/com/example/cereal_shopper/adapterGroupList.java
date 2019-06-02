@@ -18,11 +18,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/*adapter to the list of groups that the user can create or be add on
+it implements  buttons in each element of the list
+*/
 public class adapterGroupList extends ArrayAdapter<DbGroup> {
     private DatabaseHelper db;
     private Context mContext;
     private List<DbGroup> groupList = new ArrayList<>();
+
 
     public adapterGroupList(@NonNull Context context, @LayoutRes List<DbGroup> list) {
         super(context, 0 , list);
@@ -39,7 +42,6 @@ public class adapterGroupList extends ArrayAdapter<DbGroup> {
             listItem = LayoutInflater.from(mContext).inflate(R.layout.layout_group_list_item, parent,false);
 
         final DbGroup currentGroup = groupList.get(position);
-
         TextView name = (TextView) listItem.findViewById(R.id.group_item_name);
         name.setText(currentGroup.getTitle());
 
@@ -78,11 +80,11 @@ public class adapterGroupList extends ArrayAdapter<DbGroup> {
 
                 final View _v = v;
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
-                builder1.setMessage("Sei sicuro di voler uscire dal gruppo?");
+                builder1.setMessage(mContext.getString(R.string.uscita_gruppo));
                 builder1.setCancelable(true);
 
                 builder1.setPositiveButton(
-                        "Sì",
+                        mContext.getString(R.string.si),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
@@ -107,7 +109,7 @@ public class adapterGroupList extends ArrayAdapter<DbGroup> {
                         });
 
                 builder1.setNegativeButton(
-                        "No",
+                        mContext.getString(R.string.no),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();

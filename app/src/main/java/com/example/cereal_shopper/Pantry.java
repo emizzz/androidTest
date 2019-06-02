@@ -15,6 +15,11 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+
+/*
+ *pantry fragment, contained in Lists
+ **/
+
 public class Pantry extends Fragment{
     private DatabaseHelper db;
     private Global globalApp;

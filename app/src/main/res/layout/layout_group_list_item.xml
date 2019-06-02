@@ -8,16 +8,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/toolbar_margin_size"
+
         >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/group_item"
+
             android:padding="@dimen/margin_padding_size_large"
+
             >
 
             <TextView
-                android:text="FAMIGLIA"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/margin_padding_size_small"
                 android:layout_width="wrap_content"
@@ -25,25 +28,33 @@
                 android:id="@+id/group_item_name"
                 android:layout_alignParentTop="true"
                 android:textSize="@dimen/text_size_large"
-            />
+
+                />
 
             <ImageButton
                 android:layout_alignParentRight="true"
-                android:tint="@color/colorPrimary"
+                android:tint="@color/colorPrimaryDark"
                 android:id="@+id/group_item_icon1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/standard_touch_size"
+                android:layout_height="@dimen/standard_touch_size"
                 android:padding="@dimen/margin_padding_size_small"
-                android:src="@android:drawable/ic_menu_delete" />
+                android:backgroundTint="@color/white"
+                android:src="@drawable/ic_baseline_delete_24px"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"/>
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/standard_touch_size"
+                android:layout_height="@dimen/standard_touch_size"
                 android:layout_toLeftOf="@id/group_item_icon1"
                 android:id="@+id/group_item_icon2"
-                android:tint="@color/colorPrimary"
+                android:backgroundTint="@color/white"
+                android:tint="@color/colorPrimaryDark"
                 android:padding="@dimen/margin_padding_size_small"
-                android:src="@android:drawable/ic_menu_my_calendar"
+                android:src="@drawable/ic_baseline_account_box_24px"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+
                 />
 
 

@@ -1,6 +1,10 @@
 package com.example.cereal_shopper;
 import ir.mirrajabi.searchdialog.core.Searchable;
 
+
+/*
+ *element that help the user search in the database of users and get the person they are searching for
+ **/
 public class AddGroupUser implements Searchable {
     private DbUser user;
     private String title;

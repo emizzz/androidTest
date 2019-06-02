@@ -7,25 +7,25 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+/*
+* class database users and it's functions
+**/
 public class DbUser {
     int id;
     String name;
     String email;
-    int balance;
+    Double balance;
     ArrayList<Integer> group_ids;
     long creation_date;
     String serialized_group_ids;
-    //byte[] photo;
 
     public DbUser(){}
 
-    public DbUser(String name, String email, int _balance, ArrayList<Integer> _group_ids) {
+    public DbUser(String name, String email, double _balance, ArrayList<Integer> _group_ids) {
         this.name = name;
         this.email = email;
         this.balance = _balance;
-        //this.photo = _photo;
         this.creation_date = new Date().getTime();
-
         this.group_ids = _group_ids;
         this.serialized_group_ids = listToString(_group_ids);
 
@@ -44,7 +44,7 @@ public class DbUser {
     public void setEmail(String _email) {
         this.email = _email;
     }
-    public void setBalance(int _balance) {
+    public void setBalance(double _balance) {
         this.balance = _balance;
     }
     public void setGroupId(ArrayList<Integer> _group_ids) {
@@ -69,7 +69,7 @@ public class DbUser {
     public String getEmail() {
         return this.email;
     }
-    public int getBalance() {
+    public double getBalance() {
         return this.balance;
     }
     public ArrayList<Integer> getGroupIds() {

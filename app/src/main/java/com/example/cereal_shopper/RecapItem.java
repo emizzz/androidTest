@@ -24,9 +24,8 @@ import java.util.Date;
 import java.util.List;
 
 /*
-* TODO: necessario un fab per eliminare e uno per modificare
-* */
-
+ * activity with the attributes of the item
+ **/
 public class RecapItem extends AppCompatActivity {
     private FloatingActionButton delete_btn;
     private FloatingActionButton modify_btn;
@@ -50,16 +49,6 @@ public class RecapItem extends AppCompatActivity {
         setContentView(R.layout.activity_recap_item);
 
         db = new DatabaseHelper(getApplicationContext());
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.left);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         nameView = findViewById(R.id.recap_name);
         categoryView = findViewById(R.id.recap_category);
@@ -80,11 +69,22 @@ public class RecapItem extends AppCompatActivity {
                 compileFields(currentProduct);
             }
             else{
-                Toast.makeText(RecapItem.this, "Prodotto non trovato",
+                Toast.makeText(RecapItem.this, getString(R.string.prodotto_non_trovato),
                         Toast.LENGTH_SHORT).show();
             }
         }
 
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.left);
+        getSupportActionBar().setTitle(currentProduct.name);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
         //---------------------------------------------fab buttons---------------------------------------------
@@ -123,8 +123,8 @@ public class RecapItem extends AppCompatActivity {
                 };
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setMessage("Sicuro di voler eliminare questo prodotto?").setPositiveButton("Sì", dialogClickListener)
-                        .setNegativeButton("No", dialogClickListener).show();
+                builder.setMessage(getString(R.string.elimina_prodotto)).setPositiveButton(R.string.si, dialogClickListener)
+                        .setNegativeButton(R.string.no, dialogClickListener).show();
             }
         });
         modify_btn= (FloatingActionButton) findViewById(R.id.recap_btn_modify);
@@ -134,7 +134,7 @@ public class RecapItem extends AppCompatActivity {
                 Intent intent=new Intent(getApplicationContext(), AddToPantry.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("autocompile_fields", currentProduct.getId());
-                intent.putExtra("recap_item", "Modifica prodotto");
+                intent.putExtra("recap_item", R.string.modifica_prodotto);
 
                 Bundle extras = getIntent().getExtras();
                 if (extras != null && !extras.getString("from").equals("")) {
