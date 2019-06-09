@@ -122,12 +122,26 @@
                     />
 
             </LinearLayout>
-
-
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/double_component_size"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/prezzo"
+                android:layout_gravity="center"
+                android:layout_weight="3"
+                android:textSize="@dimen/text_size_large"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                android:layout_marginRight="@dimen/margin_padding_size_medium"
+                />
             <EditText
                 android:id="@+id/add_to_pantry_price"
                 android:layout_height="wrap_content"
-                android:hint="@string/prezzo"
                 android:inputType="number"
                 android:layout_width="wrap_content"
                 android:textSize="@dimen/text_size_large"
@@ -137,11 +151,27 @@
                 android:layout_marginBottom="@dimen/margin_padding_size_medium"
                 android:layout_weight="2">
             </EditText>
-
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/double_component_size"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/scadenza"
+                android:layout_gravity="center"
+                android:layout_weight="3"
+                android:textSize="@dimen/text_size_large"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                android:layout_marginRight="@dimen/margin_padding_size_medium"
+                />
             <EditText
                 android:id="@+id/add_to_pantry_expiry"
                 android:layout_height="wrap_content"
-                android:hint="@string/scadenza"
                 android:inputType="textPersonName"
                 android:layout_width="wrap_content"
                 android:textSize="@dimen/text_size_large"
@@ -151,10 +181,28 @@
                 android:layout_marginBottom="@dimen/margin_padding_size_medium"
                 android:layout_weight="2">
             </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/double_component_size"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/note"
+                android:layout_gravity="center"
+                android:layout_weight="3"
+                android:textSize="@dimen/text_size_large"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                android:layout_marginRight="@dimen/margin_padding_size_medium"
+                />
             <EditText
                 android:id="@+id/add_to_pantry_notes"
                 android:layout_height="wrap_content"
-                android:hint="@string/note"
                 android:inputType="textPersonName"
                 android:layout_width="match_parent"
                 android:textSize="@dimen/text_size_large"
@@ -165,6 +213,7 @@
 
                 android:layout_weight="2">
             </EditText>
+        </LinearLayout>
 
 
 

@@ -55,7 +55,7 @@
         <EditText
             android:id="@+id/add_list_product_name"
             android:layout_height="wrap_content"
-            android:hint="@string/prodotto"
+            android:text="@string/prodotto"
             android:inputType="textPersonName"
             android:layout_width="match_parent"
             android:textSize="@dimen/text_size_medium"
@@ -108,7 +108,7 @@
             android:id="@+id/add_list_product_notes"
             android:inputType="text|textMultiLine"
             android:layout_height="150dp"
-            android:hint="@string/note"
+            android:text="@string/note"
             android:layout_width="match_parent"
             android:textSize="@dimen/text_size_large"
             android:layout_marginStart="@dimen/margin_padding_size_medium"

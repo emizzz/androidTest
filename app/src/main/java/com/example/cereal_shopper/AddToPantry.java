@@ -112,7 +112,6 @@ public class AddToPantry extends AppCompatActivity {
 
         }
 
-
         //date picker
         expiryView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +130,7 @@ public class AddToPantry extends AppCompatActivity {
                 dialog.show();
             }
         });
+
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -143,8 +143,12 @@ public class AddToPantry extends AppCompatActivity {
             }
         };
 
+        if (extras != null)
+            getSupportActionBar().setTitle(currentProduct.getName());
+        else
+            getSupportActionBar().setTitle(R.string.nuovoprodotto);
 
-        getSupportActionBar().setTitle(currentProduct.getName());
+
         toolbar.setNavigationIcon(R.drawable.left);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -247,6 +251,7 @@ public class AddToPantry extends AppCompatActivity {
         }
 
     }
+
     void setFields(DbProduct product){
         //set name
         nameView.setText( currentProduct.getName() );
