@@ -201,14 +201,11 @@ public class AddToPantry extends AppCompatActivity {
                         }
 
                         //adds the price of the brought item to the user balance
-                        if(currentProduct.getPrice()!=-1){
-                            double newB= globalApp.getCurrentUser().getBalance()+currentProduct.getPrice();
+                        if(new_product.getPrice()!=-1){
+                            double newB= globalApp.getCurrentUser().getBalance()+ new_product.getPrice();
                             globalApp.getCurrentUser().setBalance(newB);
-
                             globalApp.db.updateUser(globalApp.getCurrentUser());
                         }
-
-
 
                         Intent intent = new Intent(getApplicationContext(), Lists.class);
                         intent.putExtra( "tab_index", tabIndex );
@@ -216,7 +213,7 @@ public class AddToPantry extends AppCompatActivity {
 
                     }
                     catch(Exception e){
-                        Toast.makeText(AddToPantry.this, "Errore interno",
+                        Toast.makeText(AddToPantry.this, "Errore interno 0",
                                 Toast.LENGTH_SHORT).show();
                         Log.d("AddToPantry", e.getMessage());
                     }
