@@ -101,15 +101,26 @@ public class AddToPantry extends AppCompatActivity {
         if (extras != null && extras.getInt("autocompile_fields", -1) != -1) {
 
             //if the user wants to modify the product from the recapItem activity
-            if(extras.getString("recap_item") != null){
+            /*if(extras.getString("recap_item") != null){
                 setTitle(extras.getString("recap_item"));
-            }
+            }*/
 
             int productId = extras.getInt("autocompile_fields");
             currentProduct = db.getProduct(productId);
 
             setFields(currentProduct);
 
+        }
+
+
+        //TODO
+        if (extras != null) {
+            if(extras.getString("custom_title") != null){
+                setTitle(extras.getString("custom_title"));
+            }
+            else{
+                setTitle(currentProduct.getName());
+            }
         }
 
         //date picker
@@ -143,10 +154,10 @@ public class AddToPantry extends AppCompatActivity {
             }
         };
 
-        if (extras != null)
+        /*if (extras != null)
             getSupportActionBar().setTitle(currentProduct.getName());
         else
-            getSupportActionBar().setTitle(R.string.nuovoprodotto);
+            getSupportActionBar().setTitle(R.string.nuovoprodotto);*/
 
 
         toolbar.setNavigationIcon(R.drawable.left);
