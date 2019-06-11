@@ -66,6 +66,7 @@ public class AddToPantry extends AppCompatActivity {
         weightView = findViewById(R.id.add_to_pantry_weight);
         weightView.setKeyListener(DigitsKeyListener.getInstance("0123456789.,"));
         priceView = findViewById(R.id.add_to_pantry_price);
+        priceView.setKeyListener(DigitsKeyListener.getInstance("0123456789.,"));
         expiryView = findViewById(R.id.add_to_pantry_expiry);
         notesView = findViewById(R.id.add_to_pantry_notes);
         expiryView.setFocusable(false);

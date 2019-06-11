@@ -199,7 +199,6 @@ public class AddGroupItem extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        Log.d("dawadwadwa","dwdawdwadadwa");
     }
 
     public Integer getGroupId(){

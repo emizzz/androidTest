@@ -392,8 +392,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             new_product_copy.setName(c.getString((c.getColumnIndex(KEY_PRODUCT_NAME))));
             new_product_copy.setCategoryId(c.getInt((c.getColumnIndex(KEY_PRODUCT_CATEGORY_ID))));
             new_product_copy.setQuantity(c.getInt((c.getColumnIndex(KEY_PRODUCT_QUANTITY))));
-            new_product_copy.setWeight(c.getInt((c.getColumnIndex(KEY_PRODUCT_WEIGHT))));
-            new_product_copy.setPrice(c.getInt((c.getColumnIndex(KEY_PRODUCT_PRICE))));
+            new_product_copy.setWeight(c.getDouble((c.getColumnIndex(KEY_PRODUCT_WEIGHT))));
+            new_product_copy.setPrice(c.getDouble((c.getColumnIndex(KEY_PRODUCT_PRICE))));
             new_product_copy.setExpiry(c.getInt((c.getColumnIndex(KEY_PRODUCT_EXPIRY))));
             new_product_copy.setNotes(c.getString((c.getColumnIndex(KEY_PRODUCT_NOTES))));
             new_product_copy.setCreationDate(c.getInt((c.getColumnIndex(KEY_CREATED_AT))));
