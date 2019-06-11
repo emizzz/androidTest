@@ -64,8 +64,8 @@ public class adapterUserList extends ArrayAdapter<DbUser> {
 
         }
 
-        //balance.setText( Double.toString(currentUser.getBalance()) );
-        balance.setText( Double.toString(0) );
+        balance.setText( Double.toString(currentUser.getBalance()) );
+        //balance.setText( Double.toString(0) );
 
 
         ImageView image = listItem.findViewById(R.id.user_item_image);
