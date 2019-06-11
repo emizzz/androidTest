@@ -263,7 +263,7 @@ public class AddToPantry extends AppCompatActivity {
 
     void setFields(DbProduct product){
         //set name
-        nameView.setText( currentProduct.getName() );
+        nameView.setText( product.getName() );
 
 
         //set categories
