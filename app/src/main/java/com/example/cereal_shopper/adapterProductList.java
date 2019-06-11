@@ -63,10 +63,10 @@ public class adapterProductList extends ArrayAdapter<DbProduct> {
 
         ImageView image = listItem.findViewById(R.id.product_item_image);
         if(currentProduct.getName().equals(mContext.getString(R.string.esempio1))) image.setImageResource(R.drawable.pane);
-        if(currentProduct.getName().equals(mContext.getString(R.string.esempio2))) image.setImageResource(R.drawable.latte);
-        if(currentProduct.getName().equals(mContext.getString(R.string.esempio3))) image.setImageResource(R.drawable.pasta);
-        if(currentProduct.getName().equals(mContext.getString(R.string.esempio4))) image.setImageResource(R.drawable.grana);
-
+        else{if(currentProduct.getName().equals(mContext.getString(R.string.esempio2))) image.setImageResource(R.drawable.latte);
+        else{if(currentProduct.getName().equals(mContext.getString(R.string.esempio3))) image.setImageResource(R.drawable.pasta);
+        else{if(currentProduct.getName().equals(mContext.getString(R.string.esempio4))) image.setImageResource(R.drawable.grana);
+        else image.setImageResource(android.R.drawable.ic_dialog_info);}}}
 
 
 
