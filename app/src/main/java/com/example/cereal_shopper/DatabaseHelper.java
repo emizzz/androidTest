@@ -19,7 +19,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String LOG = "DatabaseHelper";
 
     // Database Version
-    private static final int DATABASE_VERSION = 25;
+    private static final int DATABASE_VERSION = 27;
 
     // Database Name
     private static final String DATABASE_NAME = "cerealShopper";
@@ -178,7 +178,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 product3 = new DbProduct("shopping_list", 1, 0, "Pan bauletto", cat.getId(), 1, -1, -1, -1, "");
             }
             else if(cat.getName().equals("Latte, yogurt e formaggi")){
-                product1 = new DbProduct("pantry", 1, 1, "Latte", cat.getId(), 2, 1000.43, 2.73, 1567517309, "");
+                product1 = new DbProduct("pantry", 1, 0, "Latte", cat.getId(), 2, 1000.43, 2.73, 1567517309, "");
                 product4 = new DbProduct("shopping_list", 1, 0, "Formaggio grana", cat.getId(), 1, -1, -1, -1, "");
             }
         }
