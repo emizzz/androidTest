@@ -114,7 +114,6 @@ public class AddToPantry extends AppCompatActivity {
         }
 
 
-        //TODO
         if (extras != null) {
             if(extras.getString("custom_title") != null){
                 setTitle(extras.getString("custom_title"));

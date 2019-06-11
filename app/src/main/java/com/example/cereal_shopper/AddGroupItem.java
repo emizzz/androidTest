@@ -84,7 +84,7 @@ public class AddGroupItem extends AppCompatActivity {
 
         //get all the users
         List<DbUser> db_users = db.getUsers();
-        DbUser currentUser = globalApp.getCurrentUser();
+        final DbUser currentUser = globalApp.getCurrentUser();
         boolean userAlreadyInList = false;
         boolean check = true;
 
@@ -123,8 +123,18 @@ public class AddGroupItem extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //TODO
+                ArrayList<AddGroupUser> to_show_users = new ArrayList<AddGroupUser>();
+                for (AddGroupUser _user : all_users){
+                    if(_user.getUser().getId() != currentUser.getId()){
+                        to_show_users.add(_user);
+                    }
+
+                }
+
                 new SimpleSearchDialogCompat(AddGroupItem.this, getString(R.string.aggiungi_user),
-                        "...", null, all_users,
+                        "...", null, to_show_users,
                         new SearchResultListener<AddGroupUser>() {
                             @Override
                             public void onSelected(BaseSearchDialogCompat dialog, AddGroupUser item, int position) {

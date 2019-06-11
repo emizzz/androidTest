@@ -121,7 +121,7 @@ public class adapterProductList extends ArrayAdapter<DbProduct> {
                 if(action.equals("click_in_shopping_list")){
                     Intent intent=new Intent(getContext(), AddToPantry.class);
                     intent.putExtra("autocompile_fields", currentProduct.getId());
-                    //TODO
+
                     intent.putExtra("custom_title", "Aggiungi alla dispensa");
                     v.getContext().startActivity(intent);
                 }

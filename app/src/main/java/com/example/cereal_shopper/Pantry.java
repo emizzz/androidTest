@@ -54,7 +54,7 @@ public class Pantry extends Fragment{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AddToPantry.class);
-                //TODO
+
                 intent.putExtra("custom_title", "Aggiungi alla dispensa");
                 getActivity().startActivity(intent);
 
