@@ -19,7 +19,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String LOG = "DatabaseHelper";
 
     // Database Version
-    private static final int DATABASE_VERSION = 27;
+    private static final int DATABASE_VERSION = 28;
 
     // Database Name
     private static final String DATABASE_NAME = "cerealShopper";
@@ -141,9 +141,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         //create 2 groups
-        DbGroup group = new DbGroup("group 1");
+        DbGroup group = new DbGroup("Famiglia");
         long new_group_id = this.createGroup(group);
-        DbGroup group2 = new DbGroup("group 2");
+        DbGroup group2 = new DbGroup("Coinquilini");
         long new_group_id2 = this.createGroup(group2);
 
         //create 2 users

@@ -57,7 +57,7 @@ public class AddGroupItem extends AppCompatActivity {
 
             Toolbar toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle(currentGroup.getTitle());
+            getSupportActionBar().setTitle("Modifica gruppo");
             toolbar.setNavigationIcon(R.drawable.left);
 
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {

@@ -28,10 +28,10 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 /*
-*this activity can either create a product and add it to the pantry or modify/confirm an item into the pantry that was int he shopping list
-* if autocompile_fields is passed: this activity precompile the form with the product's info (the product's id is passed with the extras)
-* else: the form is initialized empty
-* */
+ *this activity can either create a product and add it to the pantry or modify/confirm an item into the pantry that was int he shopping list
+ * if autocompile_fields is passed: this activity precompile the form with the product's info (the product's id is passed with the extras)
+ * else: the form is initialized empty
+ * */
 
 public class AddToPantry extends AppCompatActivity {
     private DatabaseHelper db;
@@ -272,7 +272,7 @@ public class AddToPantry extends AppCompatActivity {
 
         //set price
         if(product.getPrice() != -1){
-           priceView.setText(String.valueOf(product.getPrice()));
+            priceView.setText(String.valueOf(product.getPrice()));
         }
 
         //set expiry

@@ -47,7 +47,7 @@ public class AddToShoppingList extends AppCompatActivity {
         db = new DatabaseHelper(getApplicationContext());
         globalApp = (Global)getApplicationContext().getApplicationContext();
         currentUser = globalApp.getCurrentUser();
-
+        setTitle("Aggiungi alla lista");
 
         //autocomplete categories
         final List<DbCategory> categories = db.getCategories();
